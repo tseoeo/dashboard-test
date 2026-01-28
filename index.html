@@ -5,295 +5,774 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tencent Cloud — CEE Market Sizing Dashboard</title>
 <style>
-/* === RESET & BASE === */
+/* === DESIGN TOKENS === */
+:root {
+  /* Palette — cool slate foundation */
+  --bg-base: #f8fafc;
+  --bg-raised: #ffffff;
+  --bg-sunken: #f1f5f9;
+  --bg-hero: #0f172a;
+  --bg-hero-card: rgba(255,255,255,0.06);
+  --bg-hero-card-hover: rgba(255,255,255,0.10);
+
+  /* Borders */
+  --border: rgba(15,23,42,0.08);
+  --border-subtle: rgba(15,23,42,0.05);
+  --border-strong: rgba(15,23,42,0.12);
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-faint: #cbd5e1;
+  --text-on-dark: #f8fafc;
+  --text-on-dark-secondary: #94a3b8;
+  --text-on-dark-muted: #64748b;
+
+  /* Semantic — color for meaning only */
+  --tam: #4f46e5;
+  --sam: #7c3aed;
+  --som: #db2777;
+  --hu: #2563eb;
+  --bg-country: #059669;
+  --rs: #d97706;
+  --conf-high: #059669;
+  --conf-med: #d97706;
+  --conf-low: #dc2626;
+
+  /* Spacing (4px grid) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* Radius — sharp system */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 100px;
+
+  /* Typography */
+  --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+
+  /* Transitions */
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* === RESET === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font);
   font-size: 14px;
-  line-height: 1.5;
-  color: #1a1f36;
-  background: #f4f5f7;
+  line-height: 1.55;
+  color: var(--text-primary);
+  background: var(--bg-base);
 }
 
 /* === TYPOGRAPHY === */
-h1 { font-size: 28px; font-weight: 700; }
-h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-small { font-size: 12px; color: #6b7280; }
+h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; }
+h2 { font-size: 18px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.3; }
+h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.4; }
+.mono { font-family: var(--font-mono); font-feature-settings: 'tnum'; }
 
 /* === LAYOUT === */
-.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.container { max-width: 1120px; margin: 0 auto; padding: 0 var(--sp-6); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
 
-/* === CARD === */
+/* === CARD — border-based depth === */
 .card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: var(--bg-raised);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
 }
-.card-sm { padding: 16px; }
-
-/* === COLORS === */
-.text-tam { color: #6366f1; }
-.text-sam { color: #8b5cf6; }
-.text-som { color: #ec4899; }
-.bg-tam { background: #6366f1; }
-.bg-sam { background: #8b5cf6; }
-.bg-som { background: #ec4899; }
-.accent-hu { border-left: 4px solid #3b82f6; }
-.accent-bg { border-left: 4px solid #10b981; }
-.accent-rs { border-left: 4px solid #f59e0b; }
-.color-hu { color: #3b82f6; }
-.color-bg { color: #10b981; }
-.color-rs { color: #f59e0b; }
+.card-sm { padding: var(--sp-4); }
 
 /* === HERO === */
 #hero {
   min-height: 100vh;
-  background: #1a1f36;
-  color: #fff;
+  background: var(--bg-hero);
+  color: var(--text-on-dark);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 32px 0;
+  padding: var(--sp-10) 0;
 }
-#hero .subtitle { color: #94a3b8; font-size: 15px; margin-top: 4px; }
-#hero .exec-bullets { margin: 18px 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: #cbd5e1; }
-#hero .exec-bullets li::marker { color: #ec4899; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--som);
+  background: rgba(219,39,119,0.12);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--sp-4);
+}
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--som);
+}
+#hero .subtitle {
+  color: var(--text-on-dark-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: var(--sp-1);
+  letter-spacing: 0.01em;
+}
+#hero .exec-bullets {
+  margin: var(--sp-5) 0;
+  padding-left: var(--sp-5);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text-on-dark-secondary);
+  list-style: none;
+  counter-reset: bullet;
+}
+#hero .exec-bullets li {
+  counter-increment: bullet;
+  position: relative;
+  padding-left: var(--sp-6);
+  margin-bottom: var(--sp-1);
+}
+#hero .exec-bullets li::before {
+  content: counter(bullet);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+}
+#hero .exec-bullets li strong { color: var(--text-on-dark); }
 
 /* Hero KPI tiles */
-.hero-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0; }
+.hero-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin: var(--sp-5) 0;
+}
 .hero-tile {
-  background: rgba(255,255,255,0.07);
-  border-radius: 8px;
-  padding: 18px 20px;
-  text-align: center;
+  background: var(--bg-hero-card);
+  border: 0.5px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4) var(--sp-5);
+  transition: background 200ms var(--ease);
 }
-.hero-tile .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 4px; }
-.hero-tile .big { font-size: 32px; font-weight: 800; }
-.hero-tile .sub { font-size: 12px; opacity: 0.6; margin-top: 2px; }
+.hero-tile:hover { background: var(--bg-hero-card-hover); }
+.hero-tile .label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--sp-2);
+}
+.hero-tile .big {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.hero-tile .sub {
+  font-size: 12px;
+  color: var(--text-on-dark-muted);
+  margin-top: var(--sp-2);
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+}
 
-/* Country mini cards */
-.country-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0; }
-.country-mini {
-  background: rgba(255,255,255,0.05);
-  border-radius: 8px;
-  padding: 14px 16px;
-  border-left: 3px solid;
+/* Country strip */
+.country-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin: var(--sp-3) 0;
 }
-.country-mini h3 { font-size: 14px; margin-bottom: 6px; }
-.country-mini .metrics { font-size: 12px; opacity: 0.8; line-height: 1.6; }
+.country-mini {
+  background: var(--bg-hero-card);
+  border: 0.5px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-3) var(--sp-4);
+  border-left: 2px solid;
+  transition: background 200ms var(--ease);
+}
+.country-mini:hover { background: var(--bg-hero-card-hover); }
+.country-mini h3 { font-size: 13px; font-weight: 600; margin-bottom: var(--sp-1); }
+.country-mini .metrics {
+  font-size: 12px;
+  color: var(--text-on-dark-secondary);
+  line-height: 1.6;
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+}
 .country-mini .metrics span { display: block; }
+.country-mini .metrics strong { color: var(--text-on-dark); font-weight: 600; }
 
 /* Buyer chips */
-.buyer-chips { display: flex; gap: 12px; margin: 10px 0; }
+.buyer-chips { display: flex; gap: var(--sp-2); margin: var(--sp-3) 0; flex-wrap: wrap; }
 .chip {
-  background: rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-size: 13px;
+  background: rgba(255,255,255,0.06);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: 12px;
   font-weight: 500;
+  color: var(--text-on-dark-secondary);
+  transition: background 200ms var(--ease);
 }
+.chip:hover { background: rgba(255,255,255,0.10); }
+.chip strong { color: var(--text-on-dark); font-weight: 600; }
 
 /* Nav buttons */
-.nav-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.nav-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-5); }
 .nav-btn {
-  display: inline-block;
-  background: rgba(255,255,255,0.12);
-  color: #fff;
-  border-radius: 20px;
-  padding: 7px 18px;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  color: var(--text-on-dark-secondary);
+  border-radius: var(--radius-pill);
+  padding: 6px var(--sp-4);
+  font-size: 12px;
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.2s;
+  transition: all 150ms var(--ease);
+  letter-spacing: 0.01em;
 }
-.nav-btn:hover { background: rgba(255,255,255,0.25); }
+.nav-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: var(--text-on-dark);
+}
 
 /* === SECTION === */
-.section { padding: 56px 0; }
+.section { padding: var(--sp-16) 0; }
+.section + .section { border-top: 0.5px solid var(--border-subtle); }
 .section-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 6px;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
 }
 .section-header .bar {
-  width: 4px;
-  height: 28px;
+  width: 3px;
+  height: 20px;
   border-radius: 2px;
 }
 .takeaway {
   font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 24px;
-  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-6);
+  padding-left: 15px;
+  border-left: 2px solid var(--border);
 }
+
+/* Color utility */
+.text-tam { color: var(--tam); }
+.text-sam { color: var(--sam); }
+.text-som { color: var(--som); }
+.bg-tam { background: var(--tam); }
+.bg-sam { background: var(--sam); }
+.bg-som { background: var(--som); }
+.color-hu { color: var(--hu); }
+.color-bg { color: var(--bg-country); }
+.color-rs { color: var(--rs); }
 
 /* Metric tiles */
 .metric-tile { text-align: center; }
-.metric-tile .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-bottom: 4px; }
-.metric-tile .value { font-size: 28px; font-weight: 800; }
-.metric-tile .accts { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+.metric-tile .label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+.metric-tile .value {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.metric-tile .accts {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: var(--sp-1);
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+}
 
 /* Funnel */
-.funnel { margin: 24px 0; }
-.funnel-bar {
-  margin: 4px auto;
-  border-radius: 6px;
-  padding: 10px 0;
-  text-align: center;
-  color: #fff;
+.funnel { margin: var(--sp-5) 0 var(--sp-2); }
+.funnel-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+}
+.funnel-label {
+  width: 48px;
+  font-size: 11px;
   font-weight: 600;
-  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: right;
+  flex-shrink: 0;
+}
+.funnel-track {
+  flex: 1;
+  height: 32px;
+  background: var(--bg-sunken);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
   position: relative;
 }
-.funnel-bar .pct {
-  position: absolute;
-  right: -60px;
-  top: 50%;
-  transform: translateY(-50%);
+.funnel-fill {
+  height: 100%;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-3);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  white-space: nowrap;
+}
+.funnel-pct {
   font-size: 11px;
-  color: #6b7280;
-  font-weight: 400;
+  font-weight: 500;
+  color: var(--text-muted);
+  width: 40px;
+  text-align: left;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
 }
 
 /* Profile cards */
-.profile-card { border-top: 3px solid; }
-.profile-card .nums { display: flex; gap: 16px; margin: 10px 0; font-size: 13px; }
-.profile-card .nums span { display: flex; flex-direction: column; }
-.profile-card .nums .n-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #9ca3af; }
-.profile-card ul { font-size: 13px; color: #4b5563; padding-left: 16px; }
+.profile-card {
+  border-top: 2px solid;
+}
+.profile-card h3 { margin-bottom: var(--sp-3); }
+.profile-card .nums {
+  display: flex;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  padding-bottom: var(--sp-3);
+  border-bottom: 0.5px solid var(--border-subtle);
+}
+.profile-card .nums span {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  font-size: 14px;
+  font-weight: 600;
+}
+.profile-card .nums .n-label {
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.profile-card ul {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  line-height: 1.6;
+}
 .profile-card ul li { margin-bottom: 2px; }
+.profile-card ul li::marker { color: var(--text-faint); }
 
 /* Scenario tiles */
-.scenario-tile { text-align: center; border-radius: 8px; }
-.scenario-tile.low { background: #f3f4f6; }
-.scenario-tile.base { background: #eff6ff; border: 1px solid #bfdbfe; }
-.scenario-tile.high { background: #ecfdf5; border: 1px solid #a7f3d0; }
-.scenario-tile .s-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; }
-.scenario-tile .s-value { font-size: 22px; font-weight: 800; margin: 4px 0; }
-.scenario-tile .s-mult { font-size: 11px; color: #9ca3af; }
+.scenario-tile {
+  text-align: center;
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+.scenario-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+.scenario-tile.low { background: var(--bg-sunken); }
+.scenario-tile.low::before { background: var(--text-muted); }
+.scenario-tile.base {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+.scenario-tile.base::before { background: var(--hu); }
+.scenario-tile.high {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+.scenario-tile.high::before { background: var(--conf-high); }
+.scenario-tile .s-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-1);
+}
+.scenario-tile .s-value {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.scenario-tile .s-mult {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
 
-/* Assumptions table */
+/* Data table */
 .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-table th { background: #f9fafb; text-align: left; padding: 10px 12px; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
-.data-table td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; }
-.data-table tr:hover td { background: #f9fafb; }
-.conf-high { color: #059669; font-weight: 600; }
-.conf-med { color: #d97706; font-weight: 600; }
-.conf-low { color: #dc2626; font-weight: 600; }
+.data-table th {
+  text-align: left;
+  padding: var(--sp-3);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-strong);
+  background: transparent;
+}
+.data-table td {
+  padding: var(--sp-3);
+  border-bottom: 0.5px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+.data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--bg-sunken); }
+.conf-high { color: var(--conf-high); font-weight: 600; }
+.conf-med { color: var(--conf-med); font-weight: 600; }
+.conf-low { color: var(--conf-low); font-weight: 600; }
 
-/* Sensitivity bars */
-.sens-driver { margin-bottom: 16px; }
-.sens-driver .driver-label { font-weight: 600; margin-bottom: 4px; }
-.sens-driver .impact-bar-wrap { background: #f3f4f6; border-radius: 4px; height: 24px; position: relative; overflow: hidden; }
-.sens-driver .impact-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; color: #fff; font-size: 11px; font-weight: 600; }
-.sens-driver .impact-note { font-size: 12px; color: #6b7280; margin-top: 2px; }
+/* Sensitivity */
+.sens-driver { margin-bottom: var(--sp-5); }
+.sens-driver:last-child { margin-bottom: 0; }
+.sens-driver .driver-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-2);
+}
+.sens-driver .impact-bar-wrap {
+  background: var(--bg-sunken);
+  border-radius: var(--radius-sm);
+  height: 28px;
+  overflow: hidden;
+}
+.sens-driver .impact-bar {
+  height: 100%;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  padding-left: var(--sp-3);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+.sens-driver .impact-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: var(--sp-1);
+  line-height: 1.5;
+}
 
-/* Glossary */
-.glossary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.glossary-table td { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; }
-.glossary-table td:first-child { font-weight: 600; width: 160px; }
+/* Glossary / profile tables */
+.info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.info-table td {
+  padding: var(--sp-2) 0;
+  border-bottom: 0.5px solid var(--border-subtle);
+  vertical-align: top;
+}
+.info-table tr:last-child td { border-bottom: none; }
+.info-table td:first-child {
+  font-weight: 500;
+  color: var(--text-muted);
+  width: 140px;
+  padding-right: var(--sp-3);
+  font-size: 12px;
+}
+.info-table td:last-child { color: var(--text-secondary); }
 
 /* Back to top */
 .back-top {
-  display: inline-block;
-  margin-top: 24px;
-  font-size: 13px;
-  color: #6366f1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-8);
+  font-size: 12px;
+  color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
+  transition: color 150ms var(--ease);
 }
-.back-top:hover { text-decoration: underline; }
+.back-top:hover { color: var(--text-secondary); }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .grid-3, .hero-tiles, .country-strip { grid-template-columns: 1fr; }
-  .hero-tile .big { font-size: 24px; }
-  .buyer-chips { flex-direction: column; }
-  .nav-row { flex-direction: column; }
-  .funnel-bar .pct { display: none; }
+/* Section label */
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-4);
 }
+
+/* Profile detail cards */
+.profile-detail-card h3 {
+  margin-bottom: var(--sp-2);
+}
+.profile-detail-card .desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-4);
+  line-height: 1.55;
+}
+.profile-detail-card .source {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 0.5px solid var(--border-subtle);
+}
+
+/* Method list */
+.method-list {
+  padding-left: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.method-list li {
+  counter-increment: step;
+  position: relative;
+  padding: var(--sp-3) 0 var(--sp-3) var(--sp-10);
+  border-bottom: 0.5px solid var(--border-subtle);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.method-list li:last-child { border-bottom: none; }
+.method-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: var(--sp-3);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  border: 0.5px solid var(--border);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+.method-list li strong { color: var(--text-primary); }
+
+/* Exclusions list */
+.exclusion-list {
+  padding-left: 0;
+  list-style: none;
+}
+.exclusion-list li {
+  position: relative;
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-5);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.exclusion-list li::before {
+  content: '×';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  :root { --sp-6: 16px; }
+
+  h1 { font-size: 20px; }
+
+  .container { padding: 0 var(--sp-4); }
+
+  .grid-3,
+  .hero-tiles,
+  .country-strip {
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
+  }
+
+  #hero {
+    min-height: auto;
+    padding: var(--sp-12) 0;
+  }
+
+  .hero-tile { padding: var(--sp-3) var(--sp-4); }
+  .hero-tile .big { font-size: 22px; }
+
+  .buyer-chips { flex-wrap: wrap; }
+
+  .nav-row { gap: var(--sp-2); }
+
+  .section { padding: var(--sp-10) 0; }
+
+  .metric-tile .value { font-size: 20px; }
+
+  .funnel-label { width: 36px; font-size: 10px; }
+  .funnel-fill { font-size: 11px; padding: 0 var(--sp-2); }
+  .funnel-pct { width: 32px; font-size: 10px; }
+
+  .profile-card .nums { flex-wrap: wrap; gap: var(--sp-3); }
+
+  .scenario-tile .s-value { font-size: 18px; }
+
+  .data-table { font-size: 12px; }
+  .data-table th,
+  .data-table td { padding: var(--sp-2) var(--sp-2); }
+
+  /* Horizontal scroll for wide tables on mobile */
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-scroll table { min-width: 600px; }
+
+  .method-list li { padding-left: var(--sp-8); }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 18px; }
+  .hero-tile .big { font-size: 20px; }
+  .nav-row { gap: 6px; }
+  .nav-btn { font-size: 11px; padding: 5px var(--sp-3); }
+  .grid-3 { gap: var(--sp-2); }
+}
+
 @media print {
   #hero { min-height: auto; page-break-after: always; }
   .nav-row, .back-top { display: none; }
+  .section { padding: var(--sp-8) 0; }
 }
 </style>
 </head>
 <body>
 
 <!-- ============================================================ -->
-<!-- HERO SECTION                                                  -->
+<!-- HERO                                                          -->
 <!-- ============================================================ -->
 <section id="hero">
 <div class="container">
-  <h1>Tencent Cloud — CEE Market Sizing Dashboard</h1>
+  <div class="hero-badge">Market Analysis</div>
+  <h1>Tencent Cloud — CEE Market Sizing</h1>
   <div class="subtitle">Hungary · Bulgaria · Serbia &nbsp;|&nbsp; TAM / SAM / SOM Analysis</div>
 
   <ol class="exec-bullets">
     <li>Combined CEE-3 cloud infrastructure TAM is <strong>$1.74 B</strong> across ~25,300 enterprise accounts.</li>
-    <li>Serviceable market (SAM) narrows to <strong>$675 M</strong> in public IaaS/PaaS — excluding legacy on-prem-only and captive hyperscaler commitments.</li>
+    <li>Serviceable market (SAM) narrows to <strong>$675 M</strong> in public IaaS/PaaS — excluding legacy on-prem and captive hyperscaler commitments.</li>
     <li>Conservative 3-year obtainable market (SOM) is <strong>$66 M</strong> (~960 accounts), with upside to $106 M in a high scenario.</li>
     <li>Mid-to-large enterprises represent <strong>55 %</strong> of SAM; tech startups 30 %; government/public sector 15 %.</li>
     <li>Brand awareness and local data-center presence are the two highest-impact levers for Tencent's CEE entry.</li>
   </ol>
 
-  <!-- Big number tiles -->
   <div class="hero-tiles">
     <div class="hero-tile">
       <div class="label text-tam">Total Addressable Market</div>
-      <div class="big text-tam">$1.74 B</div>
+      <div class="big text-tam">$1.74B</div>
       <div class="sub">25,300 accounts</div>
     </div>
     <div class="hero-tile">
       <div class="label text-sam">Serviceable Addressable</div>
-      <div class="big text-sam">$675 M</div>
+      <div class="big text-sam">$675M</div>
       <div class="sub">9,700 accounts</div>
     </div>
     <div class="hero-tile">
       <div class="label text-som">Serviceable Obtainable</div>
-      <div class="big text-som">$66 M</div>
+      <div class="big text-som">$66M</div>
       <div class="sub">960 accounts</div>
     </div>
   </div>
 
-  <!-- Country strip -->
   <div class="country-strip">
-    <div class="country-mini" style="border-color:#3b82f6">
+    <div class="country-mini" style="border-color:var(--hu)">
       <h3 class="color-hu">Hungary</h3>
       <div class="metrics">
-        <span>TAM $950 M · SAM $380 M</span>
-        <span><strong>SOM $38 M</strong> · 480 accts</span>
+        <span>TAM $950M · SAM $380M</span>
+        <span><strong>SOM $38M</strong> · 480 accts</span>
       </div>
     </div>
-    <div class="country-mini" style="border-color:#10b981">
+    <div class="country-mini" style="border-color:var(--bg-country)">
       <h3 class="color-bg">Bulgaria</h3>
       <div class="metrics">
-        <span>TAM $450 M · SAM $170 M</span>
-        <span><strong>SOM $17 M</strong> · 280 accts</span>
+        <span>TAM $450M · SAM $170M</span>
+        <span><strong>SOM $17M</strong> · 280 accts</span>
       </div>
     </div>
-    <div class="country-mini" style="border-color:#f59e0b">
+    <div class="country-mini" style="border-color:var(--rs)">
       <h3 class="color-rs">Serbia</h3>
       <div class="metrics">
-        <span>TAM $340 M · SAM $125 M</span>
-        <span><strong>SOM $11 M</strong> · 200 accts</span>
+        <span>TAM $340M · SAM $125M</span>
+        <span><strong>SOM $11M</strong> · 200 accts</span>
       </div>
     </div>
   </div>
 
-  <!-- Buyer chips -->
   <div class="buyer-chips">
-    <div class="chip">Enterprises <strong>55 %</strong> of SAM</div>
-    <div class="chip">Startups <strong>30 %</strong> of SAM</div>
-    <div class="chip">Government <strong>15 %</strong> of SAM</div>
+    <div class="chip">Enterprises <strong>55%</strong> of SAM</div>
+    <div class="chip">Startups <strong>30%</strong> of SAM</div>
+    <div class="chip">Government <strong>15%</strong> of SAM</div>
   </div>
 
-  <!-- Navigation -->
   <div class="nav-row">
     <a href="#hungary" class="nav-btn">Hungary</a>
     <a href="#bulgaria" class="nav-btn">Bulgaria</a>
@@ -313,48 +792,58 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="hungary" class="section">
 <div class="container">
+  <div class="section-label">Country Analysis</div>
   <div class="section-header">
-    <div class="bar" style="background:#3b82f6"></div>
+    <div class="bar" style="background:var(--hu)"></div>
     <h2 class="color-hu">Hungary</h2>
   </div>
-  <p class="takeaway">Largest CEE-3 market at $950 M TAM; enterprise migration drives 55 % of the opportunity.</p>
+  <p class="takeaway">Largest CEE-3 market at $950M TAM; enterprise migration drives 55% of the opportunity.</p>
 
-  <!-- KPI tiles -->
-  <div class="grid-3" style="margin-bottom:24px">
+  <div class="grid-3" style="margin-bottom:var(--sp-5)">
     <div class="card card-sm metric-tile">
       <div class="label">TAM</div>
-      <div class="value text-tam">$950 M</div>
+      <div class="value text-tam">$950M</div>
       <div class="accts">12,000 accounts</div>
     </div>
     <div class="card card-sm metric-tile">
-      <div class="label">SAM (40 %)</div>
-      <div class="value text-sam">$380 M</div>
+      <div class="label">SAM (40%)</div>
+      <div class="value text-sam">$380M</div>
       <div class="accts">4,800 accounts</div>
     </div>
     <div class="card card-sm metric-tile">
-      <div class="label">SOM (10 % of SAM)</div>
-      <div class="value text-som">$38 M</div>
+      <div class="label">SOM (10% of SAM)</div>
+      <div class="value text-som">$38M</div>
       <div class="accts">480 accounts</div>
     </div>
   </div>
 
-  <!-- Funnel -->
-  <div class="card" style="margin-bottom:24px">
-    <h3>TAM → SAM → SOM Funnel</h3>
-    <div class="funnel" style="max-width:700px">
-      <div class="funnel-bar bg-tam" style="width:100%">TAM $950 M<span class="pct">100 %</span></div>
-      <div class="funnel-bar bg-sam" style="width:40%">SAM $380 M<span class="pct">40 %</span></div>
-      <div class="funnel-bar bg-som" style="width:10%">SOM $38 M<span class="pct">10 %</span></div>
+  <div class="card" style="margin-bottom:var(--sp-5)">
+    <h3 style="margin-bottom:var(--sp-3)">TAM → SAM → SOM Funnel</h3>
+    <div class="funnel">
+      <div class="funnel-row">
+        <div class="funnel-label">TAM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-tam" style="width:100%">$950M</div></div>
+        <div class="funnel-pct">100%</div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">SAM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-sam" style="width:40%">$380M</div></div>
+        <div class="funnel-pct">40%</div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">SOM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-som" style="width:10%">$38M</div></div>
+        <div class="funnel-pct">10%</div>
+      </div>
     </div>
   </div>
 
-  <!-- Buyer profile breakdown -->
-  <div class="grid-3" style="margin-bottom:24px">
-    <div class="card card-sm profile-card" style="border-color:#3b82f6">
-      <h3>Enterprises (55 %)</h3>
+  <div class="grid-3" style="margin-bottom:var(--sp-5)">
+    <div class="card card-sm profile-card" style="border-color:var(--hu)">
+      <h3>Enterprises (55%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$209 M</span>
-        <span><span class="n-label">SOM</span>$20.9 M</span>
+        <span><span class="n-label">SAM</span>$209M</span>
+        <span><span class="n-label">SOM</span>$20.9M</span>
         <span><span class="n-label">Accts</span>264</span>
       </div>
       <ul>
@@ -362,11 +851,11 @@ small { font-size: 12px; color: #6b7280; }
         <li>Disaster recovery and multi-cloud diversification</li>
       </ul>
     </div>
-    <div class="card card-sm profile-card" style="border-color:#3b82f6">
-      <h3>Startups (30 %)</h3>
+    <div class="card card-sm profile-card" style="border-color:var(--hu)">
+      <h3>Startups (30%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$114 M</span>
-        <span><span class="n-label">SOM</span>$11.4 M</span>
+        <span><span class="n-label">SAM</span>$114M</span>
+        <span><span class="n-label">SOM</span>$11.4M</span>
         <span><span class="n-label">Accts</span>144</span>
       </div>
       <ul>
@@ -374,11 +863,11 @@ small { font-size: 12px; color: #6b7280; }
         <li>Price-sensitive; responsive to competitive offers</li>
       </ul>
     </div>
-    <div class="card card-sm profile-card" style="border-color:#3b82f6">
-      <h3>Government (15 %)</h3>
+    <div class="card card-sm profile-card" style="border-color:var(--hu)">
+      <h3>Government (15%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$57 M</span>
-        <span><span class="n-label">SOM</span>$5.7 M</span>
+        <span><span class="n-label">SAM</span>$57M</span>
+        <span><span class="n-label">SOM</span>$5.7M</span>
         <span><span class="n-label">Accts</span>72</span>
       </div>
       <ul>
@@ -388,21 +877,21 @@ small { font-size: 12px; color: #6b7280; }
     </div>
   </div>
 
-  <!-- Scenarios -->
+  <div class="section-label">SOM Scenarios</div>
   <div class="grid-3">
     <div class="card card-sm scenario-tile low">
       <div class="s-label">Low</div>
-      <div class="s-value">$22.8 M</div>
+      <div class="s-value">$22.8M</div>
       <div class="s-mult">0.6× base</div>
     </div>
     <div class="card card-sm scenario-tile base">
       <div class="s-label">Base</div>
-      <div class="s-value">$38 M</div>
+      <div class="s-value">$38M</div>
       <div class="s-mult">1.0×</div>
     </div>
     <div class="card card-sm scenario-tile high">
       <div class="s-label">High</div>
-      <div class="s-value">$60.8 M</div>
+      <div class="s-value">$60.8M</div>
       <div class="s-mult">1.6× base</div>
     </div>
   </div>
@@ -416,45 +905,58 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="bulgaria" class="section">
 <div class="container">
+  <div class="section-label">Country Analysis</div>
   <div class="section-header">
-    <div class="bar" style="background:#10b981"></div>
+    <div class="bar" style="background:var(--bg-country)"></div>
     <h2 class="color-bg">Bulgaria</h2>
   </div>
   <p class="takeaway">Fast-growing IT outsourcing hub; the startup segment punches above its weight.</p>
 
-  <div class="grid-3" style="margin-bottom:24px">
+  <div class="grid-3" style="margin-bottom:var(--sp-5)">
     <div class="card card-sm metric-tile">
       <div class="label">TAM</div>
-      <div class="value text-tam">$450 M</div>
+      <div class="value text-tam">$450M</div>
       <div class="accts">7,500 accounts</div>
     </div>
     <div class="card card-sm metric-tile">
-      <div class="label">SAM (38 %)</div>
-      <div class="value text-sam">$170 M</div>
+      <div class="label">SAM (38%)</div>
+      <div class="value text-sam">$170M</div>
       <div class="accts">2,800 accounts</div>
     </div>
     <div class="card card-sm metric-tile">
-      <div class="label">SOM (10 % of SAM)</div>
-      <div class="value text-som">$17 M</div>
+      <div class="label">SOM (10% of SAM)</div>
+      <div class="value text-som">$17M</div>
       <div class="accts">280 accounts</div>
     </div>
   </div>
 
-  <div class="card" style="margin-bottom:24px">
-    <h3>TAM → SAM → SOM Funnel</h3>
-    <div class="funnel" style="max-width:700px">
-      <div class="funnel-bar bg-tam" style="width:100%">TAM $450 M<span class="pct">100 %</span></div>
-      <div class="funnel-bar bg-sam" style="width:38%">SAM $170 M<span class="pct">38 %</span></div>
-      <div class="funnel-bar bg-som" style="width:10%">SOM $17 M<span class="pct">10 %</span></div>
+  <div class="card" style="margin-bottom:var(--sp-5)">
+    <h3 style="margin-bottom:var(--sp-3)">TAM → SAM → SOM Funnel</h3>
+    <div class="funnel">
+      <div class="funnel-row">
+        <div class="funnel-label">TAM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-tam" style="width:100%">$450M</div></div>
+        <div class="funnel-pct">100%</div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">SAM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-sam" style="width:38%">$170M</div></div>
+        <div class="funnel-pct">38%</div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">SOM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-som" style="width:10%">$17M</div></div>
+        <div class="funnel-pct">10%</div>
+      </div>
     </div>
   </div>
 
-  <div class="grid-3" style="margin-bottom:24px">
-    <div class="card card-sm profile-card" style="border-color:#10b981">
-      <h3>Enterprises (55 %)</h3>
+  <div class="grid-3" style="margin-bottom:var(--sp-5)">
+    <div class="card card-sm profile-card" style="border-color:var(--bg-country)">
+      <h3>Enterprises (55%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$93.5 M</span>
-        <span><span class="n-label">SOM</span>$9.35 M</span>
+        <span><span class="n-label">SAM</span>$93.5M</span>
+        <span><span class="n-label">SOM</span>$9.35M</span>
         <span><span class="n-label">Accts</span>154</span>
       </div>
       <ul>
@@ -462,11 +964,11 @@ small { font-size: 12px; color: #6b7280; }
         <li>EU-funded digital transformation programs</li>
       </ul>
     </div>
-    <div class="card card-sm profile-card" style="border-color:#10b981">
-      <h3>Startups (30 %)</h3>
+    <div class="card card-sm profile-card" style="border-color:var(--bg-country)">
+      <h3>Startups (30%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$51 M</span>
-        <span><span class="n-label">SOM</span>$5.1 M</span>
+        <span><span class="n-label">SAM</span>$51M</span>
+        <span><span class="n-label">SOM</span>$5.1M</span>
         <span><span class="n-label">Accts</span>84</span>
       </div>
       <ul>
@@ -474,11 +976,11 @@ small { font-size: 12px; color: #6b7280; }
         <li>High cloud-native adoption among dev-first companies</li>
       </ul>
     </div>
-    <div class="card card-sm profile-card" style="border-color:#10b981">
-      <h3>Government (15 %)</h3>
+    <div class="card card-sm profile-card" style="border-color:var(--bg-country)">
+      <h3>Government (15%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$25.5 M</span>
-        <span><span class="n-label">SOM</span>$2.55 M</span>
+        <span><span class="n-label">SAM</span>$25.5M</span>
+        <span><span class="n-label">SOM</span>$2.55M</span>
         <span><span class="n-label">Accts</span>42</span>
       </div>
       <ul>
@@ -488,20 +990,21 @@ small { font-size: 12px; color: #6b7280; }
     </div>
   </div>
 
+  <div class="section-label">SOM Scenarios</div>
   <div class="grid-3">
     <div class="card card-sm scenario-tile low">
       <div class="s-label">Low</div>
-      <div class="s-value">$10.2 M</div>
+      <div class="s-value">$10.2M</div>
       <div class="s-mult">0.6× base</div>
     </div>
     <div class="card card-sm scenario-tile base">
       <div class="s-label">Base</div>
-      <div class="s-value">$17 M</div>
+      <div class="s-value">$17M</div>
       <div class="s-mult">1.0×</div>
     </div>
     <div class="card card-sm scenario-tile high">
       <div class="s-label">High</div>
-      <div class="s-value">$27.2 M</div>
+      <div class="s-value">$27.2M</div>
       <div class="s-mult">1.6× base</div>
     </div>
   </div>
@@ -515,45 +1018,58 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="serbia" class="section">
 <div class="container">
+  <div class="section-label">Country Analysis</div>
   <div class="section-header">
-    <div class="bar" style="background:#f59e0b"></div>
+    <div class="bar" style="background:var(--rs)"></div>
     <h2 class="color-rs">Serbia</h2>
   </div>
   <p class="takeaway">Smallest but fastest-growing market; government digitization creates near-term opportunity.</p>
 
-  <div class="grid-3" style="margin-bottom:24px">
+  <div class="grid-3" style="margin-bottom:var(--sp-5)">
     <div class="card card-sm metric-tile">
       <div class="label">TAM</div>
-      <div class="value text-tam">$340 M</div>
+      <div class="value text-tam">$340M</div>
       <div class="accts">5,800 accounts</div>
     </div>
     <div class="card card-sm metric-tile">
-      <div class="label">SAM (37 %)</div>
-      <div class="value text-sam">$125 M</div>
+      <div class="label">SAM (37%)</div>
+      <div class="value text-sam">$125M</div>
       <div class="accts">2,100 accounts</div>
     </div>
     <div class="card card-sm metric-tile">
-      <div class="label">SOM (9 % of SAM)</div>
-      <div class="value text-som">$11 M</div>
+      <div class="label">SOM (9% of SAM)</div>
+      <div class="value text-som">$11M</div>
       <div class="accts">200 accounts</div>
     </div>
   </div>
 
-  <div class="card" style="margin-bottom:24px">
-    <h3>TAM → SAM → SOM Funnel</h3>
-    <div class="funnel" style="max-width:700px">
-      <div class="funnel-bar bg-tam" style="width:100%">TAM $340 M<span class="pct">100 %</span></div>
-      <div class="funnel-bar bg-sam" style="width:37%">SAM $125 M<span class="pct">37 %</span></div>
-      <div class="funnel-bar bg-som" style="width:9%">SOM $11 M<span class="pct">9 %</span></div>
+  <div class="card" style="margin-bottom:var(--sp-5)">
+    <h3 style="margin-bottom:var(--sp-3)">TAM → SAM → SOM Funnel</h3>
+    <div class="funnel">
+      <div class="funnel-row">
+        <div class="funnel-label">TAM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-tam" style="width:100%">$340M</div></div>
+        <div class="funnel-pct">100%</div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">SAM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-sam" style="width:37%">$125M</div></div>
+        <div class="funnel-pct">37%</div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">SOM</div>
+        <div class="funnel-track"><div class="funnel-fill bg-som" style="width:9%">$11M</div></div>
+        <div class="funnel-pct">9%</div>
+      </div>
     </div>
   </div>
 
-  <div class="grid-3" style="margin-bottom:24px">
-    <div class="card card-sm profile-card" style="border-color:#f59e0b">
-      <h3>Enterprises (55 %)</h3>
+  <div class="grid-3" style="margin-bottom:var(--sp-5)">
+    <div class="card card-sm profile-card" style="border-color:var(--rs)">
+      <h3>Enterprises (55%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$68.75 M</span>
-        <span><span class="n-label">SOM</span>$6.05 M</span>
+        <span><span class="n-label">SAM</span>$68.75M</span>
+        <span><span class="n-label">SOM</span>$6.05M</span>
         <span><span class="n-label">Accts</span>110</span>
       </div>
       <ul>
@@ -561,11 +1077,11 @@ small { font-size: 12px; color: #6b7280; }
         <li>Growing interest in hybrid deployments</li>
       </ul>
     </div>
-    <div class="card card-sm profile-card" style="border-color:#f59e0b">
-      <h3>Startups (30 %)</h3>
+    <div class="card card-sm profile-card" style="border-color:var(--rs)">
+      <h3>Startups (30%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$37.5 M</span>
-        <span><span class="n-label">SOM</span>$3.3 M</span>
+        <span><span class="n-label">SAM</span>$37.5M</span>
+        <span><span class="n-label">SOM</span>$3.3M</span>
         <span><span class="n-label">Accts</span>60</span>
       </div>
       <ul>
@@ -573,11 +1089,11 @@ small { font-size: 12px; color: #6b7280; }
         <li>Strong developer talent pool, cost-competitive</li>
       </ul>
     </div>
-    <div class="card card-sm profile-card" style="border-color:#f59e0b">
-      <h3>Government (15 %)</h3>
+    <div class="card card-sm profile-card" style="border-color:var(--rs)">
+      <h3>Government (15%)</h3>
       <div class="nums">
-        <span><span class="n-label">SAM</span>$18.75 M</span>
-        <span><span class="n-label">SOM</span>$1.65 M</span>
+        <span><span class="n-label">SAM</span>$18.75M</span>
+        <span><span class="n-label">SOM</span>$1.65M</span>
         <span><span class="n-label">Accts</span>30</span>
       </div>
       <ul>
@@ -587,20 +1103,21 @@ small { font-size: 12px; color: #6b7280; }
     </div>
   </div>
 
+  <div class="section-label">SOM Scenarios</div>
   <div class="grid-3">
     <div class="card card-sm scenario-tile low">
       <div class="s-label">Low</div>
-      <div class="s-value">$6.6 M</div>
+      <div class="s-value">$6.6M</div>
       <div class="s-mult">0.6× base</div>
     </div>
     <div class="card card-sm scenario-tile base">
       <div class="s-label">Base</div>
-      <div class="s-value">$11 M</div>
+      <div class="s-value">$11M</div>
       <div class="s-mult">1.0×</div>
     </div>
     <div class="card card-sm scenario-tile high">
       <div class="s-label">High</div>
-      <div class="s-value">$17.6 M</div>
+      <div class="s-value">$17.6M</div>
       <div class="s-mult">1.6× base</div>
     </div>
   </div>
@@ -614,47 +1131,48 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="profiles" class="section">
 <div class="container">
+  <div class="section-label">Segmentation</div>
   <div class="section-header">
-    <div class="bar" style="background:#6366f1"></div>
+    <div class="bar" style="background:var(--tam)"></div>
     <h2>Buyer Profiles</h2>
   </div>
 
   <div class="grid-3">
-    <div class="card">
+    <div class="card profile-detail-card">
       <h3>Mid-to-Large Enterprises</h3>
-      <p style="color:#6b7280;margin-bottom:12px">Companies with 200+ employees migrating workloads — ERP, analytics, disaster recovery — to public or hybrid cloud.</p>
-      <table class="glossary-table">
-        <tr><td>Share of SAM</td><td>55 %</td></tr>
-        <tr><td>Typical annual spend</td><td>$50 K – $500 K</td></tr>
-        <tr><td>Cloud readiness</td><td><strong style="color:#d97706">Medium</strong></td></tr>
-        <tr><td>Budget capacity</td><td><strong style="color:#059669">High</strong></td></tr>
-        <tr><td>Urgency</td><td><strong style="color:#d97706">Medium</strong></td></tr>
+      <p class="desc">Companies with 200+ employees migrating workloads — ERP, analytics, disaster recovery — to public or hybrid cloud.</p>
+      <table class="info-table">
+        <tr><td>Share of SAM</td><td><strong>55%</strong></td></tr>
+        <tr><td>Annual spend</td><td>$50K – $500K</td></tr>
+        <tr><td>Cloud readiness</td><td><strong class="conf-med">Medium</strong></td></tr>
+        <tr><td>Budget capacity</td><td><strong class="conf-high">High</strong></td></tr>
+        <tr><td>Urgency</td><td><strong class="conf-med">Medium</strong></td></tr>
       </table>
-      <p style="font-size:12px;color:#9ca3af;margin-top:10px">Key data: National statistics bureaus, Eurostat enterprise surveys</p>
+      <p class="source">Key data: National statistics bureaus, Eurostat enterprise surveys</p>
     </div>
-    <div class="card">
+    <div class="card profile-detail-card">
       <h3>Tech Startups &amp; Scale-ups</h3>
-      <p style="color:#6b7280;margin-bottom:12px">Cloud-native companies needing compute, GPU, storage, and CI/CD pipelines. Price and developer experience are primary selection criteria.</p>
-      <table class="glossary-table">
-        <tr><td>Share of SAM</td><td>30 %</td></tr>
-        <tr><td>Typical annual spend</td><td>$10 K – $200 K</td></tr>
-        <tr><td>Cloud readiness</td><td><strong style="color:#059669">High</strong></td></tr>
-        <tr><td>Budget capacity</td><td><strong style="color:#dc2626">Low</strong></td></tr>
-        <tr><td>Urgency</td><td><strong style="color:#059669">High</strong></td></tr>
+      <p class="desc">Cloud-native companies needing compute, GPU, storage, and CI/CD pipelines. Price and developer experience are primary selection criteria.</p>
+      <table class="info-table">
+        <tr><td>Share of SAM</td><td><strong>30%</strong></td></tr>
+        <tr><td>Annual spend</td><td>$10K – $200K</td></tr>
+        <tr><td>Cloud readiness</td><td><strong class="conf-high">High</strong></td></tr>
+        <tr><td>Budget capacity</td><td><strong class="conf-low">Low</strong></td></tr>
+        <tr><td>Urgency</td><td><strong class="conf-high">High</strong></td></tr>
       </table>
-      <p style="font-size:12px;color:#9ca3af;margin-top:10px">Key data: Crunchbase, Dealroom, local VC reports</p>
+      <p class="source">Key data: Crunchbase, Dealroom, local VC reports</p>
     </div>
-    <div class="card">
+    <div class="card profile-detail-card">
       <h3>Government &amp; Public Sector</h3>
-      <p style="color:#6b7280;margin-bottom:12px">Ministries, agencies, and SOEs requiring sovereign or hybrid cloud. Procurement cycles are long; regulatory approval is a gating factor.</p>
-      <table class="glossary-table">
-        <tr><td>Share of SAM</td><td>15 %</td></tr>
-        <tr><td>Typical annual spend</td><td>$100 K – $1 M</td></tr>
-        <tr><td>Cloud readiness</td><td><strong style="color:#dc2626">Low</strong></td></tr>
-        <tr><td>Budget capacity</td><td><strong style="color:#059669">High</strong></td></tr>
-        <tr><td>Urgency</td><td><strong style="color:#d97706">Medium</strong></td></tr>
+      <p class="desc">Ministries, agencies, and SOEs requiring sovereign or hybrid cloud. Procurement cycles are long; regulatory approval is a gating factor.</p>
+      <table class="info-table">
+        <tr><td>Share of SAM</td><td><strong>15%</strong></td></tr>
+        <tr><td>Annual spend</td><td>$100K – $1M</td></tr>
+        <tr><td>Cloud readiness</td><td><strong class="conf-low">Low</strong></td></tr>
+        <tr><td>Budget capacity</td><td><strong class="conf-high">High</strong></td></tr>
+        <tr><td>Urgency</td><td><strong class="conf-med">Medium</strong></td></tr>
       </table>
-      <p style="font-size:12px;color:#9ca3af;margin-top:10px">Key data: Government IT budgets, EU funding allocations, procurement portals</p>
+      <p class="source">Key data: Government IT budgets, EU funding allocations, procurement portals</p>
     </div>
   </div>
 
@@ -667,24 +1185,27 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="method" class="section">
 <div class="container">
+  <div class="section-label">Approach</div>
   <div class="section-header">
-    <div class="bar" style="background:#6366f1"></div>
+    <div class="bar" style="background:var(--tam)"></div>
     <h2>Methodology</h2>
   </div>
 
   <div class="card">
-    <h3>Top-Down Approach</h3>
-    <ol style="padding-left:20px;color:#4b5563;line-height:1.9">
-      <li><strong>GDP baseline</strong> — Start with each country's nominal GDP and apply the IT-spend-to-GDP ratio (~3–4 % for CEE).</li>
-      <li><strong>Cloud share</strong> — Estimate cloud infrastructure as a share of total IT spend (~12–18 % in CEE, growing).</li>
+    <h3 style="margin-bottom:var(--sp-4)">Top-Down Approach</h3>
+    <ol class="method-list">
+      <li><strong>GDP baseline</strong> — Start with each country's nominal GDP and apply the IT-spend-to-GDP ratio (~3–4% for CEE).</li>
+      <li><strong>Cloud share</strong> — Estimate cloud infrastructure as a share of total IT spend (~12–18% in CEE, growing).</li>
       <li><strong>IaaS/PaaS slice</strong> — Exclude SaaS and on-prem-only spending to isolate the addressable IaaS + PaaS market = <strong>TAM</strong>.</li>
-      <li><strong>Addressability filter (SAM)</strong> — Remove captive hyperscaler commitments and legacy-only segments. Apply a 37–40 % filter to derive SAM.</li>
-      <li><strong>Capture rate (SOM)</strong> — Apply a conservative new-entrant 3-year capture rate of 9–10 % of SAM, benchmarked against prior CEE cloud market entries.</li>
+      <li><strong>Addressability filter (SAM)</strong> — Remove captive hyperscaler commitments and legacy-only segments. Apply a 37–40% filter to derive SAM.</li>
+      <li><strong>Capture rate (SOM)</strong> — Apply a conservative new-entrant 3-year capture rate of 9–10% of SAM, benchmarked against prior CEE cloud market entries.</li>
       <li><strong>Buyer segmentation</strong> — Allocate SAM across the three buyer profiles using employment data, startup density, and public-sector IT budget share.</li>
     </ol>
+  </div>
 
-    <h3 style="margin-top:20px">Reconciliation</h3>
-    <p style="color:#4b5563">
+  <div class="card" style="margin-top:var(--sp-4)">
+    <h3 style="margin-bottom:var(--sp-3)">Reconciliation</h3>
+    <p style="color:var(--text-secondary);font-size:13px;line-height:1.7">
       Cross-checked against Gartner / IDC CEE cloud spending estimates and Eurostat enterprise cloud adoption surveys. Account volumes derived from national business registries filtered to 200+ employee enterprises, Crunchbase startup counts, and public-sector entity counts.
     </p>
   </div>
@@ -698,29 +1219,30 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="assumptions" class="section">
 <div class="container">
+  <div class="section-label">Transparency</div>
   <div class="section-header">
-    <div class="bar" style="background:#6366f1"></div>
+    <div class="bar" style="background:var(--tam)"></div>
     <h2>Assumptions</h2>
   </div>
 
-  <div class="card" style="overflow-x:auto">
+  <div class="card table-scroll">
     <table class="data-table">
       <thead>
         <tr><th>Assumption</th><th>Value</th><th>Source / Logic</th><th>Confidence</th><th>Markets</th></tr>
       </thead>
       <tbody>
-        <tr><td>Cloud infra as % of GDP</td><td>0.40–0.50 %</td><td>Derived from Eurostat IT spend + Gartner cloud share</td><td class="conf-med">Medium</td><td>All</td></tr>
-        <tr><td>SAM as % of TAM</td><td>37–40 %</td><td>Excludes captive commitments, SaaS, on-prem-only</td><td class="conf-med">Medium</td><td>All</td></tr>
-        <tr><td>SOM capture rate (3-yr)</td><td>9–10 % of SAM</td><td>New entrant benchmark from prior CEE expansions</td><td class="conf-low">Low</td><td>All</td></tr>
-        <tr><td>Enterprise share of SAM</td><td>55 %</td><td>Employment data; 200+ employee firms dominate IT budgets</td><td class="conf-high">High</td><td>All</td></tr>
-        <tr><td>Startup share of SAM</td><td>30 %</td><td>Crunchbase / Dealroom startup density per country</td><td class="conf-med">Medium</td><td>All</td></tr>
-        <tr><td>Government share of SAM</td><td>15 %</td><td>Public IT budget share of total cloud spend</td><td class="conf-med">Medium</td><td>All</td></tr>
-        <tr><td>HU TAM</td><td>$950 M</td><td>~0.47 % of Hungary GDP; aligned with CEE benchmarks</td><td class="conf-med">Medium</td><td>HU</td></tr>
-        <tr><td>BG TAM</td><td>$450 M</td><td>IT outsourcing hub premium applied to GDP ratio</td><td class="conf-med">Medium</td><td>BG</td></tr>
-        <tr><td>RS TAM</td><td>$340 M</td><td>Smaller GDP base; fastest cloud adoption growth rate</td><td class="conf-med">Medium</td><td>RS</td></tr>
+        <tr><td>Cloud infra as % of GDP</td><td>0.40–0.50%</td><td>Derived from Eurostat IT spend + Gartner cloud share</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>SAM as % of TAM</td><td>37–40%</td><td>Excludes captive commitments, SaaS, on-prem-only</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>SOM capture rate (3-yr)</td><td>9–10% of SAM</td><td>New entrant benchmark from prior CEE expansions</td><td class="conf-low">Low</td><td>All</td></tr>
+        <tr><td>Enterprise share of SAM</td><td>55%</td><td>Employment data; 200+ employee firms dominate IT budgets</td><td class="conf-high">High</td><td>All</td></tr>
+        <tr><td>Startup share of SAM</td><td>30%</td><td>Crunchbase / Dealroom startup density per country</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>Government share of SAM</td><td>15%</td><td>Public IT budget share of total cloud spend</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>HU TAM</td><td>$950M</td><td>~0.47% of Hungary GDP; aligned with CEE benchmarks</td><td class="conf-med">Medium</td><td>HU</td></tr>
+        <tr><td>BG TAM</td><td>$450M</td><td>IT outsourcing hub premium applied to GDP ratio</td><td class="conf-med">Medium</td><td>BG</td></tr>
+        <tr><td>RS TAM</td><td>$340M</td><td>Smaller GDP base; fastest cloud adoption growth rate</td><td class="conf-med">Medium</td><td>RS</td></tr>
         <tr><td>Low scenario multiplier</td><td>0.6×</td><td>Weak brand + no local DC + regulatory friction</td><td class="conf-med">Medium</td><td>All</td></tr>
         <tr><td>High scenario multiplier</td><td>1.6×</td><td>Local DC + strong partnerships + competitive pricing</td><td class="conf-med">Medium</td><td>All</td></tr>
-        <tr><td>Account volumes</td><td>Per-country estimates</td><td>Business registries + startup databases + SOE counts</td><td class="conf-low">Low</td><td>All</td></tr>
+        <tr><td>Account volumes</td><td>Per-country</td><td>Business registries + startup databases + SOE counts</td><td class="conf-low">Low</td><td>All</td></tr>
       </tbody>
     </table>
   </div>
@@ -734,20 +1256,21 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="scenarios" class="section">
 <div class="container">
+  <div class="section-label">Projections</div>
   <div class="section-header">
-    <div class="bar" style="background:#6366f1"></div>
+    <div class="bar" style="background:var(--tam)"></div>
     <h2>Scenarios</h2>
   </div>
 
-  <div class="card" style="overflow-x:auto">
+  <div class="card table-scroll">
     <table class="data-table">
       <thead>
         <tr><th>Scenario</th><th>Multiplier</th><th>Hungary SOM</th><th>Bulgaria SOM</th><th>Serbia SOM</th><th>Total</th></tr>
       </thead>
       <tbody>
-        <tr><td><strong>Low</strong></td><td>0.6×</td><td>$22.8 M</td><td>$10.2 M</td><td>$6.6 M</td><td><strong>$39.6 M</strong></td></tr>
-        <tr><td><strong>Base</strong></td><td>1.0×</td><td>$38 M</td><td>$17 M</td><td>$11 M</td><td><strong>$66 M</strong></td></tr>
-        <tr><td><strong>High</strong></td><td>1.6×</td><td>$60.8 M</td><td>$27.2 M</td><td>$17.6 M</td><td><strong>$105.6 M</strong></td></tr>
+        <tr><td>Low</td><td>0.6×</td><td>$22.8M</td><td>$10.2M</td><td>$6.6M</td><td><strong>$39.6M</strong></td></tr>
+        <tr><td>Base</td><td>1.0×</td><td>$38M</td><td>$17M</td><td>$11M</td><td><strong>$66M</strong></td></tr>
+        <tr><td>High</td><td>1.6×</td><td>$60.8M</td><td>$27.2M</td><td>$17.6M</td><td><strong>$105.6M</strong></td></tr>
       </tbody>
     </table>
   </div>
@@ -761,36 +1284,37 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="sensitivity" class="section">
 <div class="container">
+  <div class="section-label">Risk Analysis</div>
   <div class="section-header">
-    <div class="bar" style="background:#6366f1"></div>
+    <div class="bar" style="background:var(--tam)"></div>
     <h2>Sensitivity Analysis</h2>
   </div>
-  <p class="takeaway">Top 5 drivers ranked by potential impact on obtainable market (SOM).</p>
+  <p class="takeaway">Top 5 drivers ranked by potential impact on the obtainable market (SOM).</p>
 
   <div class="card">
     <div class="sens-driver">
       <div class="driver-label">1. Government regulatory openness to Chinese cloud providers</div>
-      <div class="impact-bar-wrap"><div class="impact-bar" style="width:80%;background:#dc2626">±40 % Gov segment</div></div>
-      <div class="impact-note">Highest single-factor risk; affects 15 % of SAM directly and overall credibility indirectly.</div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:80%;background:var(--conf-low)">±40% Gov segment</div></div>
+      <div class="impact-note">Highest single-factor risk; affects 15% of SAM directly and overall credibility indirectly.</div>
     </div>
     <div class="sens-driver">
       <div class="driver-label">2. Tencent brand awareness in CEE</div>
-      <div class="impact-bar-wrap"><div class="impact-bar" style="width:60%;background:#f59e0b">±30 % SOM</div></div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:60%;background:var(--rs)">±30% SOM</div></div>
       <div class="impact-note">Enterprise and startup willingness to evaluate is heavily tied to brand recognition.</div>
     </div>
     <div class="sens-driver">
       <div class="driver-label">3. Pricing vs AWS / Azure / GCP</div>
-      <div class="impact-bar-wrap"><div class="impact-bar" style="width:50%;background:#8b5cf6">±25 % SOM</div></div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:50%;background:var(--sam)">±25% SOM</div></div>
       <div class="impact-note">Aggressive pricing is Tencent's primary competitive lever for net-new capture.</div>
     </div>
     <div class="sens-driver">
       <div class="driver-label">4. Local data center presence</div>
-      <div class="impact-bar-wrap"><div class="impact-bar" style="width:40%;background:#3b82f6">±20 % SAM</div></div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:40%;background:var(--hu)">±20% SAM</div></div>
       <div class="impact-note">Reduces latency concerns and addresses data-residency requirements.</div>
     </div>
     <div class="sens-driver">
       <div class="driver-label">5. Cloud adoption growth rate</div>
-      <div class="impact-bar-wrap"><div class="impact-bar" style="width:30%;background:#10b981">±15 % TAM</div></div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:30%;background:var(--bg-country)">±15% TAM</div></div>
       <div class="impact-note">Macro tailwind / headwind — affects all segments equally over 3-year horizon.</div>
     </div>
   </div>
@@ -804,15 +1328,16 @@ small { font-size: 12px; color: #6b7280; }
 <!-- ============================================================ -->
 <section id="notes" class="section">
 <div class="container">
+  <div class="section-label">Reference</div>
   <div class="section-header">
-    <div class="bar" style="background:#6366f1"></div>
+    <div class="bar" style="background:var(--tam)"></div>
     <h2>Notes &amp; Glossary</h2>
   </div>
 
   <div class="grid-2">
     <div class="card">
-      <h3>Exclusions</h3>
-      <ul style="padding-left:18px;color:#4b5563;line-height:1.8">
+      <h3 style="margin-bottom:var(--sp-3)">Exclusions</h3>
+      <ul class="exclusion-list">
         <li>SaaS applications (Salesforce, M365, etc.) are excluded from TAM</li>
         <li>China-specific Tencent services not available in CEE are excluded</li>
         <li>Consumer cloud storage (personal use) is excluded</li>
@@ -821,8 +1346,8 @@ small { font-size: 12px; color: #6b7280; }
       </ul>
     </div>
     <div class="card">
-      <h3>Glossary</h3>
-      <table class="glossary-table">
+      <h3 style="margin-bottom:var(--sp-3)">Glossary</h3>
+      <table class="info-table">
         <tr><td>TAM</td><td>Total Addressable Market — entire cloud infra spend (IaaS + PaaS + private cloud)</td></tr>
         <tr><td>SAM</td><td>Serviceable Addressable Market — public IaaS/PaaS Tencent can address</td></tr>
         <tr><td>SOM</td><td>Serviceable Obtainable Market — realistic 3-year capture</td></tr>
@@ -840,7 +1365,6 @@ small { font-size: 12px; color: #6b7280; }
 </section>
 
 <script>
-// Smooth scroll for anchor links (fallback for browsers without CSS scroll-behavior)
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   a.addEventListener('click', function(e) {
     var target = document.querySelector(this.getAttribute('href'));
