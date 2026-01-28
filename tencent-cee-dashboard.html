@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tencent Cloud — CEE Market Sizing Dashboard</title>
+<style>
+/* === RESET & BASE === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1f36;
+  background: #f4f5f7;
+}
+
+/* === TYPOGRAPHY === */
+h1 { font-size: 28px; font-weight: 700; }
+h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+small { font-size: 12px; color: #6b7280; }
+
+/* === LAYOUT === */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+/* === CARD === */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.card-sm { padding: 16px; }
+
+/* === COLORS === */
+.text-tam { color: #6366f1; }
+.text-sam { color: #8b5cf6; }
+.text-som { color: #ec4899; }
+.bg-tam { background: #6366f1; }
+.bg-sam { background: #8b5cf6; }
+.bg-som { background: #ec4899; }
+.accent-hu { border-left: 4px solid #3b82f6; }
+.accent-bg { border-left: 4px solid #10b981; }
+.accent-rs { border-left: 4px solid #f59e0b; }
+.color-hu { color: #3b82f6; }
+.color-bg { color: #10b981; }
+.color-rs { color: #f59e0b; }
+
+/* === HERO === */
+#hero {
+  min-height: 100vh;
+  background: #1a1f36;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 0;
+}
+#hero .subtitle { color: #94a3b8; font-size: 15px; margin-top: 4px; }
+#hero .exec-bullets { margin: 18px 0; padding-left: 20px; font-size: 14px; line-height: 1.8; color: #cbd5e1; }
+#hero .exec-bullets li::marker { color: #ec4899; }
+
+/* Hero KPI tiles */
+.hero-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0; }
+.hero-tile {
+  background: rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 18px 20px;
+  text-align: center;
+}
+.hero-tile .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 4px; }
+.hero-tile .big { font-size: 32px; font-weight: 800; }
+.hero-tile .sub { font-size: 12px; opacity: 0.6; margin-top: 2px; }
+
+/* Country mini cards */
+.country-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0; }
+.country-mini {
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 14px 16px;
+  border-left: 3px solid;
+}
+.country-mini h3 { font-size: 14px; margin-bottom: 6px; }
+.country-mini .metrics { font-size: 12px; opacity: 0.8; line-height: 1.6; }
+.country-mini .metrics span { display: block; }
+
+/* Buyer chips */
+.buyer-chips { display: flex; gap: 12px; margin: 10px 0; }
+.chip {
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Nav buttons */
+.nav-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.nav-btn {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* === SECTION === */
+.section { padding: 56px 0; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.section-header .bar {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+}
+.takeaway {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+/* Metric tiles */
+.metric-tile { text-align: center; }
+.metric-tile .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-bottom: 4px; }
+.metric-tile .value { font-size: 28px; font-weight: 800; }
+.metric-tile .accts { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+
+/* Funnel */
+.funnel { margin: 24px 0; }
+.funnel-bar {
+  margin: 4px auto;
+  border-radius: 6px;
+  padding: 10px 0;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  position: relative;
+}
+.funnel-bar .pct {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Profile cards */
+.profile-card { border-top: 3px solid; }
+.profile-card .nums { display: flex; gap: 16px; margin: 10px 0; font-size: 13px; }
+.profile-card .nums span { display: flex; flex-direction: column; }
+.profile-card .nums .n-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #9ca3af; }
+.profile-card ul { font-size: 13px; color: #4b5563; padding-left: 16px; }
+.profile-card ul li { margin-bottom: 2px; }
+
+/* Scenario tiles */
+.scenario-tile { text-align: center; border-radius: 8px; }
+.scenario-tile.low { background: #f3f4f6; }
+.scenario-tile.base { background: #eff6ff; border: 1px solid #bfdbfe; }
+.scenario-tile.high { background: #ecfdf5; border: 1px solid #a7f3d0; }
+.scenario-tile .s-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; }
+.scenario-tile .s-value { font-size: 22px; font-weight: 800; margin: 4px 0; }
+.scenario-tile .s-mult { font-size: 11px; color: #9ca3af; }
+
+/* Assumptions table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f9fafb; text-align: left; padding: 10px 12px; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
+.data-table td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; }
+.data-table tr:hover td { background: #f9fafb; }
+.conf-high { color: #059669; font-weight: 600; }
+.conf-med { color: #d97706; font-weight: 600; }
+.conf-low { color: #dc2626; font-weight: 600; }
+
+/* Sensitivity bars */
+.sens-driver { margin-bottom: 16px; }
+.sens-driver .driver-label { font-weight: 600; margin-bottom: 4px; }
+.sens-driver .impact-bar-wrap { background: #f3f4f6; border-radius: 4px; height: 24px; position: relative; overflow: hidden; }
+.sens-driver .impact-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; color: #fff; font-size: 11px; font-weight: 600; }
+.sens-driver .impact-note { font-size: 12px; color: #6b7280; margin-top: 2px; }
+
+/* Glossary */
+.glossary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.glossary-table td { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; }
+.glossary-table td:first-child { font-weight: 600; width: 160px; }
+
+/* Back to top */
+.back-top {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 13px;
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 500;
+}
+.back-top:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grid-3, .hero-tiles, .country-strip { grid-template-columns: 1fr; }
+  .hero-tile .big { font-size: 24px; }
+  .buyer-chips { flex-direction: column; }
+  .nav-row { flex-direction: column; }
+  .funnel-bar .pct { display: none; }
+}
+@media print {
+  #hero { min-height: auto; page-break-after: always; }
+  .nav-row, .back-top { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HERO SECTION                                                  -->
+<!-- ============================================================ -->
+<section id="hero">
+<div class="container">
+  <h1>Tencent Cloud — CEE Market Sizing Dashboard</h1>
+  <div class="subtitle">Hungary · Bulgaria · Serbia &nbsp;|&nbsp; TAM / SAM / SOM Analysis</div>
+
+  <ol class="exec-bullets">
+    <li>Combined CEE-3 cloud infrastructure TAM is <strong>$1.74 B</strong> across ~25,300 enterprise accounts.</li>
+    <li>Serviceable market (SAM) narrows to <strong>$675 M</strong> in public IaaS/PaaS — excluding legacy on-prem-only and captive hyperscaler commitments.</li>
+    <li>Conservative 3-year obtainable market (SOM) is <strong>$66 M</strong> (~960 accounts), with upside to $106 M in a high scenario.</li>
+    <li>Mid-to-large enterprises represent <strong>55 %</strong> of SAM; tech startups 30 %; government/public sector 15 %.</li>
+    <li>Brand awareness and local data-center presence are the two highest-impact levers for Tencent's CEE entry.</li>
+  </ol>
+
+  <!-- Big number tiles -->
+  <div class="hero-tiles">
+    <div class="hero-tile">
+      <div class="label text-tam">Total Addressable Market</div>
+      <div class="big text-tam">$1.74 B</div>
+      <div class="sub">25,300 accounts</div>
+    </div>
+    <div class="hero-tile">
+      <div class="label text-sam">Serviceable Addressable</div>
+      <div class="big text-sam">$675 M</div>
+      <div class="sub">9,700 accounts</div>
+    </div>
+    <div class="hero-tile">
+      <div class="label text-som">Serviceable Obtainable</div>
+      <div class="big text-som">$66 M</div>
+      <div class="sub">960 accounts</div>
+    </div>
+  </div>
+
+  <!-- Country strip -->
+  <div class="country-strip">
+    <div class="country-mini" style="border-color:#3b82f6">
+      <h3 class="color-hu">Hungary</h3>
+      <div class="metrics">
+        <span>TAM $950 M · SAM $380 M</span>
+        <span><strong>SOM $38 M</strong> · 480 accts</span>
+      </div>
+    </div>
+    <div class="country-mini" style="border-color:#10b981">
+      <h3 class="color-bg">Bulgaria</h3>
+      <div class="metrics">
+        <span>TAM $450 M · SAM $170 M</span>
+        <span><strong>SOM $17 M</strong> · 280 accts</span>
+      </div>
+    </div>
+    <div class="country-mini" style="border-color:#f59e0b">
+      <h3 class="color-rs">Serbia</h3>
+      <div class="metrics">
+        <span>TAM $340 M · SAM $125 M</span>
+        <span><strong>SOM $11 M</strong> · 200 accts</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buyer chips -->
+  <div class="buyer-chips">
+    <div class="chip">Enterprises <strong>55 %</strong> of SAM</div>
+    <div class="chip">Startups <strong>30 %</strong> of SAM</div>
+    <div class="chip">Government <strong>15 %</strong> of SAM</div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-row">
+    <a href="#hungary" class="nav-btn">Hungary</a>
+    <a href="#bulgaria" class="nav-btn">Bulgaria</a>
+    <a href="#serbia" class="nav-btn">Serbia</a>
+    <a href="#profiles" class="nav-btn">Profiles</a>
+    <a href="#method" class="nav-btn">Method</a>
+    <a href="#assumptions" class="nav-btn">Assumptions</a>
+    <a href="#scenarios" class="nav-btn">Scenarios</a>
+    <a href="#sensitivity" class="nav-btn">Sensitivity</a>
+    <a href="#notes" class="nav-btn">Notes</a>
+  </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- HUNGARY                                                       -->
+<!-- ============================================================ -->
+<section id="hungary" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#3b82f6"></div>
+    <h2 class="color-hu">Hungary</h2>
+  </div>
+  <p class="takeaway">Largest CEE-3 market at $950 M TAM; enterprise migration drives 55 % of the opportunity.</p>
+
+  <!-- KPI tiles -->
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="card card-sm metric-tile">
+      <div class="label">TAM</div>
+      <div class="value text-tam">$950 M</div>
+      <div class="accts">12,000 accounts</div>
+    </div>
+    <div class="card card-sm metric-tile">
+      <div class="label">SAM (40 %)</div>
+      <div class="value text-sam">$380 M</div>
+      <div class="accts">4,800 accounts</div>
+    </div>
+    <div class="card card-sm metric-tile">
+      <div class="label">SOM (10 % of SAM)</div>
+      <div class="value text-som">$38 M</div>
+      <div class="accts">480 accounts</div>
+    </div>
+  </div>
+
+  <!-- Funnel -->
+  <div class="card" style="margin-bottom:24px">
+    <h3>TAM → SAM → SOM Funnel</h3>
+    <div class="funnel" style="max-width:700px">
+      <div class="funnel-bar bg-tam" style="width:100%">TAM $950 M<span class="pct">100 %</span></div>
+      <div class="funnel-bar bg-sam" style="width:40%">SAM $380 M<span class="pct">40 %</span></div>
+      <div class="funnel-bar bg-som" style="width:10%">SOM $38 M<span class="pct">10 %</span></div>
+    </div>
+  </div>
+
+  <!-- Buyer profile breakdown -->
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="card card-sm profile-card" style="border-color:#3b82f6">
+      <h3>Enterprises (55 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$209 M</span>
+        <span><span class="n-label">SOM</span>$20.9 M</span>
+        <span><span class="n-label">Accts</span>264</span>
+      </div>
+      <ul>
+        <li>ERP / analytics migration from legacy on-prem</li>
+        <li>Disaster recovery and multi-cloud diversification</li>
+      </ul>
+    </div>
+    <div class="card card-sm profile-card" style="border-color:#3b82f6">
+      <h3>Startups (30 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$114 M</span>
+        <span><span class="n-label">SOM</span>$11.4 M</span>
+        <span><span class="n-label">Accts</span>144</span>
+      </div>
+      <ul>
+        <li>Cloud-native compute, GPU, CI/CD workloads</li>
+        <li>Price-sensitive; responsive to competitive offers</li>
+      </ul>
+    </div>
+    <div class="card card-sm profile-card" style="border-color:#3b82f6">
+      <h3>Government (15 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$57 M</span>
+        <span><span class="n-label">SOM</span>$5.7 M</span>
+        <span><span class="n-label">Accts</span>72</span>
+      </div>
+      <ul>
+        <li>Sovereign / hybrid cloud mandates</li>
+        <li>Regulatory openness to non-EU providers is key gating factor</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Scenarios -->
+  <div class="grid-3">
+    <div class="card card-sm scenario-tile low">
+      <div class="s-label">Low</div>
+      <div class="s-value">$22.8 M</div>
+      <div class="s-mult">0.6× base</div>
+    </div>
+    <div class="card card-sm scenario-tile base">
+      <div class="s-label">Base</div>
+      <div class="s-value">$38 M</div>
+      <div class="s-mult">1.0×</div>
+    </div>
+    <div class="card card-sm scenario-tile high">
+      <div class="s-label">High</div>
+      <div class="s-value">$60.8 M</div>
+      <div class="s-mult">1.6× base</div>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- BULGARIA                                                      -->
+<!-- ============================================================ -->
+<section id="bulgaria" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#10b981"></div>
+    <h2 class="color-bg">Bulgaria</h2>
+  </div>
+  <p class="takeaway">Fast-growing IT outsourcing hub; the startup segment punches above its weight.</p>
+
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="card card-sm metric-tile">
+      <div class="label">TAM</div>
+      <div class="value text-tam">$450 M</div>
+      <div class="accts">7,500 accounts</div>
+    </div>
+    <div class="card card-sm metric-tile">
+      <div class="label">SAM (38 %)</div>
+      <div class="value text-sam">$170 M</div>
+      <div class="accts">2,800 accounts</div>
+    </div>
+    <div class="card card-sm metric-tile">
+      <div class="label">SOM (10 % of SAM)</div>
+      <div class="value text-som">$17 M</div>
+      <div class="accts">280 accounts</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px">
+    <h3>TAM → SAM → SOM Funnel</h3>
+    <div class="funnel" style="max-width:700px">
+      <div class="funnel-bar bg-tam" style="width:100%">TAM $450 M<span class="pct">100 %</span></div>
+      <div class="funnel-bar bg-sam" style="width:38%">SAM $170 M<span class="pct">38 %</span></div>
+      <div class="funnel-bar bg-som" style="width:10%">SOM $17 M<span class="pct">10 %</span></div>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="card card-sm profile-card" style="border-color:#10b981">
+      <h3>Enterprises (55 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$93.5 M</span>
+        <span><span class="n-label">SOM</span>$9.35 M</span>
+        <span><span class="n-label">Accts</span>154</span>
+      </div>
+      <ul>
+        <li>Manufacturing and logistics firms modernizing IT</li>
+        <li>EU-funded digital transformation programs</li>
+      </ul>
+    </div>
+    <div class="card card-sm profile-card" style="border-color:#10b981">
+      <h3>Startups (30 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$51 M</span>
+        <span><span class="n-label">SOM</span>$5.1 M</span>
+        <span><span class="n-label">Accts</span>84</span>
+      </div>
+      <ul>
+        <li>Sofia tech ecosystem; strong outsourcing / SaaS cluster</li>
+        <li>High cloud-native adoption among dev-first companies</li>
+      </ul>
+    </div>
+    <div class="card card-sm profile-card" style="border-color:#10b981">
+      <h3>Government (15 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$25.5 M</span>
+        <span><span class="n-label">SOM</span>$2.55 M</span>
+        <span><span class="n-label">Accts</span>42</span>
+      </div>
+      <ul>
+        <li>e-Government digitization roadmap underway</li>
+        <li>EU data-sovereignty concerns may constrain non-EU providers</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card card-sm scenario-tile low">
+      <div class="s-label">Low</div>
+      <div class="s-value">$10.2 M</div>
+      <div class="s-mult">0.6× base</div>
+    </div>
+    <div class="card card-sm scenario-tile base">
+      <div class="s-label">Base</div>
+      <div class="s-value">$17 M</div>
+      <div class="s-mult">1.0×</div>
+    </div>
+    <div class="card card-sm scenario-tile high">
+      <div class="s-label">High</div>
+      <div class="s-value">$27.2 M</div>
+      <div class="s-mult">1.6× base</div>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SERBIA                                                        -->
+<!-- ============================================================ -->
+<section id="serbia" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#f59e0b"></div>
+    <h2 class="color-rs">Serbia</h2>
+  </div>
+  <p class="takeaway">Smallest but fastest-growing market; government digitization creates near-term opportunity.</p>
+
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="card card-sm metric-tile">
+      <div class="label">TAM</div>
+      <div class="value text-tam">$340 M</div>
+      <div class="accts">5,800 accounts</div>
+    </div>
+    <div class="card card-sm metric-tile">
+      <div class="label">SAM (37 %)</div>
+      <div class="value text-sam">$125 M</div>
+      <div class="accts">2,100 accounts</div>
+    </div>
+    <div class="card card-sm metric-tile">
+      <div class="label">SOM (9 % of SAM)</div>
+      <div class="value text-som">$11 M</div>
+      <div class="accts">200 accounts</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px">
+    <h3>TAM → SAM → SOM Funnel</h3>
+    <div class="funnel" style="max-width:700px">
+      <div class="funnel-bar bg-tam" style="width:100%">TAM $340 M<span class="pct">100 %</span></div>
+      <div class="funnel-bar bg-sam" style="width:37%">SAM $125 M<span class="pct">37 %</span></div>
+      <div class="funnel-bar bg-som" style="width:9%">SOM $11 M<span class="pct">9 %</span></div>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="card card-sm profile-card" style="border-color:#f59e0b">
+      <h3>Enterprises (55 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$68.75 M</span>
+        <span><span class="n-label">SOM</span>$6.05 M</span>
+        <span><span class="n-label">Accts</span>110</span>
+      </div>
+      <ul>
+        <li>Banking and telco sectors driving cloud migration</li>
+        <li>Growing interest in hybrid deployments</li>
+      </ul>
+    </div>
+    <div class="card card-sm profile-card" style="border-color:#f59e0b">
+      <h3>Startups (30 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$37.5 M</span>
+        <span><span class="n-label">SOM</span>$3.3 M</span>
+        <span><span class="n-label">Accts</span>60</span>
+      </div>
+      <ul>
+        <li>Belgrade tech scene growing rapidly</li>
+        <li>Strong developer talent pool, cost-competitive</li>
+      </ul>
+    </div>
+    <div class="card card-sm profile-card" style="border-color:#f59e0b">
+      <h3>Government (15 %)</h3>
+      <div class="nums">
+        <span><span class="n-label">SAM</span>$18.75 M</span>
+        <span><span class="n-label">SOM</span>$1.65 M</span>
+        <span><span class="n-label">Accts</span>30</span>
+      </div>
+      <ul>
+        <li>National digitization strategy in early rollout</li>
+        <li>Non-EU status reduces some data-sovereignty friction</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card card-sm scenario-tile low">
+      <div class="s-label">Low</div>
+      <div class="s-value">$6.6 M</div>
+      <div class="s-mult">0.6× base</div>
+    </div>
+    <div class="card card-sm scenario-tile base">
+      <div class="s-label">Base</div>
+      <div class="s-value">$11 M</div>
+      <div class="s-mult">1.0×</div>
+    </div>
+    <div class="card card-sm scenario-tile high">
+      <div class="s-label">High</div>
+      <div class="s-value">$17.6 M</div>
+      <div class="s-mult">1.6× base</div>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PROFILES                                                      -->
+<!-- ============================================================ -->
+<section id="profiles" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#6366f1"></div>
+    <h2>Buyer Profiles</h2>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>Mid-to-Large Enterprises</h3>
+      <p style="color:#6b7280;margin-bottom:12px">Companies with 200+ employees migrating workloads — ERP, analytics, disaster recovery — to public or hybrid cloud.</p>
+      <table class="glossary-table">
+        <tr><td>Share of SAM</td><td>55 %</td></tr>
+        <tr><td>Typical annual spend</td><td>$50 K – $500 K</td></tr>
+        <tr><td>Cloud readiness</td><td><strong style="color:#d97706">Medium</strong></td></tr>
+        <tr><td>Budget capacity</td><td><strong style="color:#059669">High</strong></td></tr>
+        <tr><td>Urgency</td><td><strong style="color:#d97706">Medium</strong></td></tr>
+      </table>
+      <p style="font-size:12px;color:#9ca3af;margin-top:10px">Key data: National statistics bureaus, Eurostat enterprise surveys</p>
+    </div>
+    <div class="card">
+      <h3>Tech Startups &amp; Scale-ups</h3>
+      <p style="color:#6b7280;margin-bottom:12px">Cloud-native companies needing compute, GPU, storage, and CI/CD pipelines. Price and developer experience are primary selection criteria.</p>
+      <table class="glossary-table">
+        <tr><td>Share of SAM</td><td>30 %</td></tr>
+        <tr><td>Typical annual spend</td><td>$10 K – $200 K</td></tr>
+        <tr><td>Cloud readiness</td><td><strong style="color:#059669">High</strong></td></tr>
+        <tr><td>Budget capacity</td><td><strong style="color:#dc2626">Low</strong></td></tr>
+        <tr><td>Urgency</td><td><strong style="color:#059669">High</strong></td></tr>
+      </table>
+      <p style="font-size:12px;color:#9ca3af;margin-top:10px">Key data: Crunchbase, Dealroom, local VC reports</p>
+    </div>
+    <div class="card">
+      <h3>Government &amp; Public Sector</h3>
+      <p style="color:#6b7280;margin-bottom:12px">Ministries, agencies, and SOEs requiring sovereign or hybrid cloud. Procurement cycles are long; regulatory approval is a gating factor.</p>
+      <table class="glossary-table">
+        <tr><td>Share of SAM</td><td>15 %</td></tr>
+        <tr><td>Typical annual spend</td><td>$100 K – $1 M</td></tr>
+        <tr><td>Cloud readiness</td><td><strong style="color:#dc2626">Low</strong></td></tr>
+        <tr><td>Budget capacity</td><td><strong style="color:#059669">High</strong></td></tr>
+        <tr><td>Urgency</td><td><strong style="color:#d97706">Medium</strong></td></tr>
+      </table>
+      <p style="font-size:12px;color:#9ca3af;margin-top:10px">Key data: Government IT budgets, EU funding allocations, procurement portals</p>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- METHOD                                                        -->
+<!-- ============================================================ -->
+<section id="method" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#6366f1"></div>
+    <h2>Methodology</h2>
+  </div>
+
+  <div class="card">
+    <h3>Top-Down Approach</h3>
+    <ol style="padding-left:20px;color:#4b5563;line-height:1.9">
+      <li><strong>GDP baseline</strong> — Start with each country's nominal GDP and apply the IT-spend-to-GDP ratio (~3–4 % for CEE).</li>
+      <li><strong>Cloud share</strong> — Estimate cloud infrastructure as a share of total IT spend (~12–18 % in CEE, growing).</li>
+      <li><strong>IaaS/PaaS slice</strong> — Exclude SaaS and on-prem-only spending to isolate the addressable IaaS + PaaS market = <strong>TAM</strong>.</li>
+      <li><strong>Addressability filter (SAM)</strong> — Remove captive hyperscaler commitments and legacy-only segments. Apply a 37–40 % filter to derive SAM.</li>
+      <li><strong>Capture rate (SOM)</strong> — Apply a conservative new-entrant 3-year capture rate of 9–10 % of SAM, benchmarked against prior CEE cloud market entries.</li>
+      <li><strong>Buyer segmentation</strong> — Allocate SAM across the three buyer profiles using employment data, startup density, and public-sector IT budget share.</li>
+    </ol>
+
+    <h3 style="margin-top:20px">Reconciliation</h3>
+    <p style="color:#4b5563">
+      Cross-checked against Gartner / IDC CEE cloud spending estimates and Eurostat enterprise cloud adoption surveys. Account volumes derived from national business registries filtered to 200+ employee enterprises, Crunchbase startup counts, and public-sector entity counts.
+    </p>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ASSUMPTIONS                                                   -->
+<!-- ============================================================ -->
+<section id="assumptions" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#6366f1"></div>
+    <h2>Assumptions</h2>
+  </div>
+
+  <div class="card" style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr><th>Assumption</th><th>Value</th><th>Source / Logic</th><th>Confidence</th><th>Markets</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cloud infra as % of GDP</td><td>0.40–0.50 %</td><td>Derived from Eurostat IT spend + Gartner cloud share</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>SAM as % of TAM</td><td>37–40 %</td><td>Excludes captive commitments, SaaS, on-prem-only</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>SOM capture rate (3-yr)</td><td>9–10 % of SAM</td><td>New entrant benchmark from prior CEE expansions</td><td class="conf-low">Low</td><td>All</td></tr>
+        <tr><td>Enterprise share of SAM</td><td>55 %</td><td>Employment data; 200+ employee firms dominate IT budgets</td><td class="conf-high">High</td><td>All</td></tr>
+        <tr><td>Startup share of SAM</td><td>30 %</td><td>Crunchbase / Dealroom startup density per country</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>Government share of SAM</td><td>15 %</td><td>Public IT budget share of total cloud spend</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>HU TAM</td><td>$950 M</td><td>~0.47 % of Hungary GDP; aligned with CEE benchmarks</td><td class="conf-med">Medium</td><td>HU</td></tr>
+        <tr><td>BG TAM</td><td>$450 M</td><td>IT outsourcing hub premium applied to GDP ratio</td><td class="conf-med">Medium</td><td>BG</td></tr>
+        <tr><td>RS TAM</td><td>$340 M</td><td>Smaller GDP base; fastest cloud adoption growth rate</td><td class="conf-med">Medium</td><td>RS</td></tr>
+        <tr><td>Low scenario multiplier</td><td>0.6×</td><td>Weak brand + no local DC + regulatory friction</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>High scenario multiplier</td><td>1.6×</td><td>Local DC + strong partnerships + competitive pricing</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>Account volumes</td><td>Per-country estimates</td><td>Business registries + startup databases + SOE counts</td><td class="conf-low">Low</td><td>All</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCENARIOS                                                     -->
+<!-- ============================================================ -->
+<section id="scenarios" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#6366f1"></div>
+    <h2>Scenarios</h2>
+  </div>
+
+  <div class="card" style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr><th>Scenario</th><th>Multiplier</th><th>Hungary SOM</th><th>Bulgaria SOM</th><th>Serbia SOM</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Low</strong></td><td>0.6×</td><td>$22.8 M</td><td>$10.2 M</td><td>$6.6 M</td><td><strong>$39.6 M</strong></td></tr>
+        <tr><td><strong>Base</strong></td><td>1.0×</td><td>$38 M</td><td>$17 M</td><td>$11 M</td><td><strong>$66 M</strong></td></tr>
+        <tr><td><strong>High</strong></td><td>1.6×</td><td>$60.8 M</td><td>$27.2 M</td><td>$17.6 M</td><td><strong>$105.6 M</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SENSITIVITY                                                   -->
+<!-- ============================================================ -->
+<section id="sensitivity" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#6366f1"></div>
+    <h2>Sensitivity Analysis</h2>
+  </div>
+  <p class="takeaway">Top 5 drivers ranked by potential impact on obtainable market (SOM).</p>
+
+  <div class="card">
+    <div class="sens-driver">
+      <div class="driver-label">1. Government regulatory openness to Chinese cloud providers</div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:80%;background:#dc2626">±40 % Gov segment</div></div>
+      <div class="impact-note">Highest single-factor risk; affects 15 % of SAM directly and overall credibility indirectly.</div>
+    </div>
+    <div class="sens-driver">
+      <div class="driver-label">2. Tencent brand awareness in CEE</div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:60%;background:#f59e0b">±30 % SOM</div></div>
+      <div class="impact-note">Enterprise and startup willingness to evaluate is heavily tied to brand recognition.</div>
+    </div>
+    <div class="sens-driver">
+      <div class="driver-label">3. Pricing vs AWS / Azure / GCP</div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:50%;background:#8b5cf6">±25 % SOM</div></div>
+      <div class="impact-note">Aggressive pricing is Tencent's primary competitive lever for net-new capture.</div>
+    </div>
+    <div class="sens-driver">
+      <div class="driver-label">4. Local data center presence</div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:40%;background:#3b82f6">±20 % SAM</div></div>
+      <div class="impact-note">Reduces latency concerns and addresses data-residency requirements.</div>
+    </div>
+    <div class="sens-driver">
+      <div class="driver-label">5. Cloud adoption growth rate</div>
+      <div class="impact-bar-wrap"><div class="impact-bar" style="width:30%;background:#10b981">±15 % TAM</div></div>
+      <div class="impact-note">Macro tailwind / headwind — affects all segments equally over 3-year horizon.</div>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- NOTES                                                         -->
+<!-- ============================================================ -->
+<section id="notes" class="section">
+<div class="container">
+  <div class="section-header">
+    <div class="bar" style="background:#6366f1"></div>
+    <h2>Notes &amp; Glossary</h2>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Exclusions</h3>
+      <ul style="padding-left:18px;color:#4b5563;line-height:1.8">
+        <li>SaaS applications (Salesforce, M365, etc.) are excluded from TAM</li>
+        <li>China-specific Tencent services not available in CEE are excluded</li>
+        <li>Consumer cloud storage (personal use) is excluded</li>
+        <li>Managed hosting and colocation-only contracts are excluded</li>
+        <li>Markets outside Hungary, Bulgaria, and Serbia are not covered</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Glossary</h3>
+      <table class="glossary-table">
+        <tr><td>TAM</td><td>Total Addressable Market — entire cloud infra spend (IaaS + PaaS + private cloud)</td></tr>
+        <tr><td>SAM</td><td>Serviceable Addressable Market — public IaaS/PaaS Tencent can address</td></tr>
+        <tr><td>SOM</td><td>Serviceable Obtainable Market — realistic 3-year capture</td></tr>
+        <tr><td>IaaS</td><td>Infrastructure as a Service</td></tr>
+        <tr><td>PaaS</td><td>Platform as a Service</td></tr>
+        <tr><td>CEE</td><td>Central and Eastern Europe</td></tr>
+        <tr><td>ARPA</td><td>Average Revenue Per Account</td></tr>
+        <tr><td>SOE</td><td>State-Owned Enterprise</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<script>
+// Smooth scroll for anchor links (fallback for browsers without CSS scroll-behavior)
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
