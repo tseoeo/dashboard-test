@@ -269,6 +269,228 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   color: var(--text-on-dark);
 }
 
+/* Scenario toggle bar */
+.scenario-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  padding: var(--sp-2) 0;
+}
+.scenario-bar .container {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.scenario-bar .bar-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-on-dark-muted);
+}
+.scenario-btn {
+  background: rgba(255,255,255,0.08);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  color: var(--text-on-dark-secondary);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 150ms var(--ease);
+}
+.scenario-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.scenario-btn.active { background: var(--som); color: #fff; border-color: var(--som); }
+
+/* Stacked bar chart */
+.stacked-bar {
+  display: flex;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: var(--sp-2);
+}
+.stacked-bar .seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.stacked-bar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.stacked-bar-legend .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: var(--sp-1);
+  vertical-align: middle;
+}
+
+/* 2x2 Matrix */
+.matrix-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1;
+  background: var(--bg-sunken);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin: var(--sp-6) auto;
+}
+.matrix-axis-x, .matrix-axis-y {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.matrix-axis-x { bottom: -24px; left: 50%; transform: translateX(-50%); }
+.matrix-axis-y { top: 50%; left: -60px; transform: translateY(-50%) rotate(-90deg); white-space: nowrap; }
+.matrix-mid-h, .matrix-mid-v {
+  position: absolute;
+  background: var(--border-subtle);
+}
+.matrix-mid-h { top: 50%; left: 0; right: 0; height: 0.5px; }
+.matrix-mid-v { left: 50%; top: 0; bottom: 0; width: 0.5px; }
+.matrix-bubble {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  transform: translate(-50%, -50%);
+}
+
+/* Stepped bar chart */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-6);
+  height: 220px;
+  padding: var(--sp-4) 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.bar-group {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-1);
+  height: 100%;
+}
+.bar-col {
+  flex: 1;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: var(--sp-1);
+  min-width: 24px;
+}
+.bar-col .bar-val {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: #fff;
+  white-space: nowrap;
+}
+.bar-chart-labels {
+  display: flex;
+  gap: var(--sp-6);
+  margin-top: var(--sp-2);
+}
+.bar-chart-labels span {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-green { background: #ecfdf5; color: #059669; }
+.badge-amber { background: #fffbeb; color: #d97706; }
+.badge-red { background: #fef2f2; color: #dc2626; }
+
+/* Phase cards */
+.phase-card {
+  position: relative;
+  padding-left: var(--sp-8);
+}
+.phase-card .phase-num {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Scenario value transition */
+.scenario-value {
+  transition: opacity 150ms var(--ease);
+}
+.scenario-value.fading { opacity: 0.3; }
+
+/* Callout card */
+.callout {
+  background: var(--bg-sunken);
+  border-left: 3px solid var(--som);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--sp-4);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: var(--sp-4);
+}
+
+/* Formula header */
+.formula {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--bg-sunken);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  margin-bottom: var(--sp-4);
+}
+
 /* === SECTION === */
 .section { padding: var(--sp-16) 0; }
 .section + .section { border-top: 0.5px solid var(--border-subtle); }
@@ -689,6 +911,13 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   .table-scroll table { min-width: 600px; }
 
   .method-list li { padding-left: var(--sp-8); }
+
+  .matrix-container { max-width: 100%; }
+  .matrix-axis-y { display: none; }
+  .bar-chart { height: 160px; gap: var(--sp-3); }
+  .bar-col .bar-val { font-size: 9px; }
+  .scenario-bar .container { flex-wrap: wrap; }
+  .stacked-bar { height: 24px; }
 }
 
 @media (max-width: 480px) {
@@ -703,6 +932,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   #hero { min-height: auto; page-break-after: always; }
   .nav-row, .back-top { display: none; }
   .section { padding: var(--sp-8) 0; }
+  .scenario-bar { display: none; }
 }
 </style>
 </head>
@@ -720,7 +950,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   <ol class="exec-bullets">
     <li>Combined CEE-3 cloud infrastructure TAM is <strong>$1.74 B</strong> across ~25,300 enterprise accounts.</li>
     <li>Serviceable market (SAM) narrows to <strong>$675 M</strong> in public IaaS/PaaS — excluding legacy on-prem and captive hyperscaler commitments.</li>
-    <li>Conservative 3-year obtainable market (SOM) is <strong>$66 M</strong> (~960 accounts), with upside to $106 M in a high scenario.</li>
+    <li>Conservative 3-year obtainable market (SOM) is <strong class="scenario-value" data-base="66">$66 M</strong> (~960 accounts), with upside to $106 M in a high scenario.</li>
     <li>Mid-to-large enterprises represent <strong>55 %</strong> of SAM; tech startups 30 %; government/public sector 15 %.</li>
     <li>Brand awareness and local data-center presence are the two highest-impact levers for Tencent's CEE entry.</li>
   </ol>
@@ -738,7 +968,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
     <div class="hero-tile">
       <div class="label text-som">Serviceable Obtainable</div>
-      <div class="big text-som">$66M</div>
+      <div class="big text-som scenario-value" data-base="66">$66M</div>
       <div class="sub">960 accounts</div>
     </div>
   </div>
@@ -748,21 +978,21 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3 class="color-hu">Hungary</h3>
       <div class="metrics">
         <span>TAM $950M · SAM $380M</span>
-        <span><strong>SOM $38M</strong> · 480 accts</span>
+        <span><strong>SOM <span class="scenario-value" data-base="38">$38M</span></strong> · 480 accts</span>
       </div>
     </div>
     <div class="country-mini" style="border-color:var(--bg-country)">
       <h3 class="color-bg">Bulgaria</h3>
       <div class="metrics">
         <span>TAM $450M · SAM $170M</span>
-        <span><strong>SOM $17M</strong> · 280 accts</span>
+        <span><strong>SOM <span class="scenario-value" data-base="17">$17M</span></strong> · 280 accts</span>
       </div>
     </div>
     <div class="country-mini" style="border-color:var(--rs)">
       <h3 class="color-rs">Serbia</h3>
       <div class="metrics">
         <span>TAM $340M · SAM $125M</span>
-        <span><strong>SOM $11M</strong> · 200 accts</span>
+        <span><strong>SOM <span class="scenario-value" data-base="11">$11M</span></strong> · 200 accts</span>
       </div>
     </div>
   </div>
@@ -777,6 +1007,13 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     <a href="#hungary" class="nav-btn">Hungary</a>
     <a href="#bulgaria" class="nav-btn">Bulgaria</a>
     <a href="#serbia" class="nav-btn">Serbia</a>
+    <a href="#competitive" class="nav-btn">Competitive</a>
+    <a href="#prioritization" class="nav-btn">Priority</a>
+    <a href="#timeline" class="nav-btn">Timeline</a>
+    <a href="#unit-economics" class="nav-btn">Unit Econ</a>
+    <a href="#regulatory" class="nav-btn">Regulatory</a>
+    <a href="#channels" class="nav-btn">Channels</a>
+    <a href="#comparables" class="nav-btn">Comparables</a>
     <a href="#profiles" class="nav-btn">Profiles</a>
     <a href="#method" class="nav-btn">Method</a>
     <a href="#assumptions" class="nav-btn">Assumptions</a>
@@ -786,6 +1023,18 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   </div>
 </div>
 </section>
+
+<!-- ============================================================ -->
+<!-- SCENARIO TOGGLE BAR                                           -->
+<!-- ============================================================ -->
+<div class="scenario-bar">
+  <div class="container">
+    <span class="bar-label">Scenario</span>
+    <button class="scenario-btn" data-scenario="low">Low (0.6×)</button>
+    <button class="scenario-btn active" data-scenario="base">Base (1.0×)</button>
+    <button class="scenario-btn" data-scenario="high">High (1.6×)</button>
+  </div>
+</div>
 
 <!-- ============================================================ -->
 <!-- HUNGARY                                                       -->
@@ -812,7 +1061,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
     <div class="card card-sm metric-tile">
       <div class="label">SOM (10% of SAM)</div>
-      <div class="value text-som">$38M</div>
+      <div class="value text-som scenario-value" data-base="38">$38M</div>
       <div class="accts">480 accounts</div>
     </div>
   </div>
@@ -832,7 +1081,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       </div>
       <div class="funnel-row">
         <div class="funnel-label">SOM</div>
-        <div class="funnel-track"><div class="funnel-fill bg-som" style="width:10%">$38M</div></div>
+        <div class="funnel-track"><div class="funnel-fill bg-som scenario-value" data-base="38" style="width:10%">$38M</div></div>
         <div class="funnel-pct">10%</div>
       </div>
     </div>
@@ -843,7 +1092,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Enterprises (55%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$209M</span>
-        <span><span class="n-label">SOM</span>$20.9M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="20.9">$20.9M</span></span>
         <span><span class="n-label">Accts</span>264</span>
       </div>
       <ul>
@@ -855,7 +1104,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Startups (30%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$114M</span>
-        <span><span class="n-label">SOM</span>$11.4M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="11.4">$11.4M</span></span>
         <span><span class="n-label">Accts</span>144</span>
       </div>
       <ul>
@@ -867,7 +1116,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Government (15%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$57M</span>
-        <span><span class="n-label">SOM</span>$5.7M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="5.7">$5.7M</span></span>
         <span><span class="n-label">Accts</span>72</span>
       </div>
       <ul>
@@ -881,17 +1130,17 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   <div class="grid-3">
     <div class="card card-sm scenario-tile low">
       <div class="s-label">Low</div>
-      <div class="s-value">$22.8M</div>
+      <div class="s-value scenario-value" data-base="38">$22.8M</div>
       <div class="s-mult">0.6× base</div>
     </div>
     <div class="card card-sm scenario-tile base">
       <div class="s-label">Base</div>
-      <div class="s-value">$38M</div>
+      <div class="s-value scenario-value" data-base="38">$38M</div>
       <div class="s-mult">1.0×</div>
     </div>
     <div class="card card-sm scenario-tile high">
       <div class="s-label">High</div>
-      <div class="s-value">$60.8M</div>
+      <div class="s-value scenario-value" data-base="38">$60.8M</div>
       <div class="s-mult">1.6× base</div>
     </div>
   </div>
@@ -925,7 +1174,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
     <div class="card card-sm metric-tile">
       <div class="label">SOM (10% of SAM)</div>
-      <div class="value text-som">$17M</div>
+      <div class="value text-som scenario-value" data-base="17">$17M</div>
       <div class="accts">280 accounts</div>
     </div>
   </div>
@@ -945,7 +1194,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       </div>
       <div class="funnel-row">
         <div class="funnel-label">SOM</div>
-        <div class="funnel-track"><div class="funnel-fill bg-som" style="width:10%">$17M</div></div>
+        <div class="funnel-track"><div class="funnel-fill bg-som scenario-value" data-base="17" style="width:10%">$17M</div></div>
         <div class="funnel-pct">10%</div>
       </div>
     </div>
@@ -956,7 +1205,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Enterprises (55%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$93.5M</span>
-        <span><span class="n-label">SOM</span>$9.35M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="9.35">$9.35M</span></span>
         <span><span class="n-label">Accts</span>154</span>
       </div>
       <ul>
@@ -968,7 +1217,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Startups (30%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$51M</span>
-        <span><span class="n-label">SOM</span>$5.1M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="5.1">$5.1M</span></span>
         <span><span class="n-label">Accts</span>84</span>
       </div>
       <ul>
@@ -980,7 +1229,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Government (15%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$25.5M</span>
-        <span><span class="n-label">SOM</span>$2.55M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="2.55">$2.55M</span></span>
         <span><span class="n-label">Accts</span>42</span>
       </div>
       <ul>
@@ -994,17 +1243,17 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   <div class="grid-3">
     <div class="card card-sm scenario-tile low">
       <div class="s-label">Low</div>
-      <div class="s-value">$10.2M</div>
+      <div class="s-value scenario-value" data-base="17">$10.2M</div>
       <div class="s-mult">0.6× base</div>
     </div>
     <div class="card card-sm scenario-tile base">
       <div class="s-label">Base</div>
-      <div class="s-value">$17M</div>
+      <div class="s-value scenario-value" data-base="17">$17M</div>
       <div class="s-mult">1.0×</div>
     </div>
     <div class="card card-sm scenario-tile high">
       <div class="s-label">High</div>
-      <div class="s-value">$27.2M</div>
+      <div class="s-value scenario-value" data-base="17">$27.2M</div>
       <div class="s-mult">1.6× base</div>
     </div>
   </div>
@@ -1038,7 +1287,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
     <div class="card card-sm metric-tile">
       <div class="label">SOM (9% of SAM)</div>
-      <div class="value text-som">$11M</div>
+      <div class="value text-som scenario-value" data-base="11">$11M</div>
       <div class="accts">200 accounts</div>
     </div>
   </div>
@@ -1058,7 +1307,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       </div>
       <div class="funnel-row">
         <div class="funnel-label">SOM</div>
-        <div class="funnel-track"><div class="funnel-fill bg-som" style="width:9%">$11M</div></div>
+        <div class="funnel-track"><div class="funnel-fill bg-som scenario-value" data-base="11" style="width:9%">$11M</div></div>
         <div class="funnel-pct">9%</div>
       </div>
     </div>
@@ -1069,7 +1318,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Enterprises (55%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$68.75M</span>
-        <span><span class="n-label">SOM</span>$6.05M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="6.05">$6.05M</span></span>
         <span><span class="n-label">Accts</span>110</span>
       </div>
       <ul>
@@ -1081,7 +1330,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Startups (30%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$37.5M</span>
-        <span><span class="n-label">SOM</span>$3.3M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="3.3">$3.3M</span></span>
         <span><span class="n-label">Accts</span>60</span>
       </div>
       <ul>
@@ -1093,7 +1342,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <h3>Government (15%)</h3>
       <div class="nums">
         <span><span class="n-label">SAM</span>$18.75M</span>
-        <span><span class="n-label">SOM</span>$1.65M</span>
+        <span><span class="n-label">SOM</span><span class="scenario-value" data-base="1.65">$1.65M</span></span>
         <span><span class="n-label">Accts</span>30</span>
       </div>
       <ul>
@@ -1107,18 +1356,615 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
   <div class="grid-3">
     <div class="card card-sm scenario-tile low">
       <div class="s-label">Low</div>
-      <div class="s-value">$6.6M</div>
+      <div class="s-value scenario-value" data-base="11">$6.6M</div>
       <div class="s-mult">0.6× base</div>
     </div>
     <div class="card card-sm scenario-tile base">
       <div class="s-label">Base</div>
-      <div class="s-value">$11M</div>
+      <div class="s-value scenario-value" data-base="11">$11M</div>
       <div class="s-mult">1.0×</div>
     </div>
     <div class="card card-sm scenario-tile high">
       <div class="s-label">High</div>
-      <div class="s-value">$17.6M</div>
+      <div class="s-value scenario-value" data-base="11">$17.6M</div>
       <div class="s-mult">1.6× base</div>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- COMPETITIVE                                                   -->
+<!-- ============================================================ -->
+<section id="competitive" class="section">
+<div class="container">
+  <div class="section-label">Competitive Intelligence</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Competitive Landscape</h2>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-4)">
+    <h3 style="margin-bottom:var(--sp-4)">Market Share by Country</h3>
+
+    <div style="margin-bottom:var(--sp-5)">
+      <div style="font-size:12px;font-weight:600;margin-bottom:var(--sp-2);color:var(--hu)">Hungary</div>
+      <div class="stacked-bar">
+        <div class="seg" style="width:32%;background:#FF9900">AWS 32%</div>
+        <div class="seg" style="width:25%;background:#0078D4">Azure 25%</div>
+        <div class="seg" style="width:12%;background:#4285F4">GCP 12%</div>
+        <div class="seg" style="width:15%;background:#64748b">Local 15%</div>
+        <div class="seg" style="width:16%;background:#cbd5e1">Other 16%</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:var(--sp-5)">
+      <div style="font-size:12px;font-weight:600;margin-bottom:var(--sp-2);color:var(--bg-country)">Bulgaria</div>
+      <div class="stacked-bar">
+        <div class="seg" style="width:28%;background:#FF9900">AWS 28%</div>
+        <div class="seg" style="width:22%;background:#0078D4">Azure 22%</div>
+        <div class="seg" style="width:10%;background:#4285F4">GCP 10%</div>
+        <div class="seg" style="width:20%;background:#64748b">Local 20%</div>
+        <div class="seg" style="width:20%;background:#cbd5e1">Other 20%</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:var(--sp-5)">
+      <div style="font-size:12px;font-weight:600;margin-bottom:var(--sp-2);color:var(--rs)">Serbia</div>
+      <div class="stacked-bar">
+        <div class="seg" style="width:25%;background:#FF9900">AWS 25%</div>
+        <div class="seg" style="width:20%;background:#0078D4">Azure 20%</div>
+        <div class="seg" style="width:8%;background:#4285F4">GCP 8%</div>
+        <div class="seg" style="width:25%;background:#64748b">Local 25%</div>
+        <div class="seg" style="width:22%;background:#cbd5e1">Other 22%</div>
+      </div>
+    </div>
+
+    <div class="stacked-bar-legend">
+      <span><span class="dot" style="background:#FF9900"></span>AWS</span>
+      <span><span class="dot" style="background:#0078D4"></span>Azure</span>
+      <span><span class="dot" style="background:#4285F4"></span>GCP</span>
+      <span><span class="dot" style="background:#64748b"></span>Local Providers</span>
+      <span><span class="dot" style="background:#cbd5e1"></span>Other/Fragmented</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>White Space Opportunity:</strong> The Other/Fragmented segment (16-22% across markets) represents Tencent's primary entry point. These customers are not locked into hyperscaler ecosystems and are receptive to competitive pricing and regional data-center presence.
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PRIORITIZATION                                                -->
+<!-- ============================================================ -->
+<section id="prioritization" class="section">
+<div class="container">
+  <div class="section-label">Strategy</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Market Entry Prioritization</h2>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-5)">
+    <h3 style="margin-bottom:var(--sp-4);text-align:center">Market Size vs. Ease of Entry</h3>
+    <div class="matrix-container">
+      <div class="matrix-mid-h"></div>
+      <div class="matrix-mid-v"></div>
+      <div class="matrix-axis-x">Market Size (SAM) →</div>
+      <div class="matrix-axis-y">↑ Ease of Entry</div>
+      <div class="matrix-bubble" style="width:80px;height:80px;background:var(--rs);top:30%;left:30%">Serbia</div>
+      <div class="matrix-bubble" style="width:90px;height:90px;background:var(--bg-country);top:55%;left:50%">Bulgaria</div>
+      <div class="matrix-bubble" style="width:110px;height:110px;background:var(--hu);top:75%;left:75%">Hungary</div>
+    </div>
+  </div>
+
+  <div class="section-label">Entry Phasing</div>
+  <div class="grid-3" style="margin-bottom:var(--sp-5)">
+    <div class="card card-sm phase-card">
+      <div class="phase-num" style="background:var(--rs)">1</div>
+      <h3 style="margin-bottom:var(--sp-2)">Phase 1: Serbia</h3>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        <strong>Beachhead market.</strong> Non-EU status reduces regulatory friction. Lower competitive intensity. Fast pilots to test GTM playbook and partner model.
+      </p>
+    </div>
+    <div class="card card-sm phase-card">
+      <div class="phase-num" style="background:var(--bg-country)">2</div>
+      <h3 style="margin-bottom:var(--sp-2)">Phase 2: Bulgaria</h3>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        <strong>Scale market.</strong> EU market entry with strong tech ecosystem. Sofia developer community provides early adopters. Build partner network and reference customers.
+      </p>
+    </div>
+    <div class="card card-sm phase-card">
+      <div class="phase-num" style="background:var(--hu)">3</div>
+      <h3 style="margin-bottom:var(--sp-2)">Phase 3: Hungary</h3>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        <strong>Enterprise push.</strong> Largest SAM, highest revenue potential. Requires local data center, enterprise partnerships, and strong reference base from phases 1-2.
+      </p>
+    </div>
+  </div>
+
+  <div class="card table-scroll">
+    <h3 style="margin-bottom:var(--sp-4)">Prioritization Scorecard</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Factor</th><th>Weight</th><th>Hungary</th><th>Bulgaria</th><th>Serbia</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Market size (SAM)</td><td>30%</td><td class="conf-high">9/10</td><td class="conf-med">5/10</td><td class="conf-med">4/10</td></tr>
+        <tr><td>Regulatory barrier</td><td>25%</td><td class="conf-low">4/10</td><td class="conf-low">4/10</td><td class="conf-high">8/10</td></tr>
+        <tr><td>Competitive intensity</td><td>20%</td><td class="conf-low">3/10</td><td class="conf-med">5/10</td><td class="conf-high">7/10</td></tr>
+        <tr><td>Partner ecosystem depth</td><td>15%</td><td class="conf-high">8/10</td><td class="conf-med">6/10</td><td class="conf-med">5/10</td></tr>
+        <tr><td>Data sovereignty concerns</td><td>10%</td><td class="conf-low">3/10</td><td class="conf-low">4/10</td><td class="conf-high">7/10</td></tr>
+        <tr><td><strong>Weighted Score</strong></td><td></td><td class="conf-med"><strong>6.0</strong></td><td class="conf-med"><strong>4.9</strong></td><td class="conf-high"><strong>6.2</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TIMELINE                                                      -->
+<!-- ============================================================ -->
+<section id="timeline" class="section">
+<div class="container">
+  <div class="section-label">Revenue Build</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>3-Year Revenue Ramp</h2>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-4)">
+    <h3 style="margin-bottom:var(--sp-4)">Annual Revenue by Country</h3>
+    <div class="bar-chart">
+      <div class="bar-group">
+        <div class="bar-col" style="background:var(--hu);height:30%"><div class="bar-val scenario-value" data-base="5.7">$5.7M</div></div>
+        <div class="bar-col" style="background:var(--bg-country);height:13.4%"><div class="bar-val scenario-value" data-base="2.55">$2.55M</div></div>
+        <div class="bar-col" style="background:var(--rs);height:8.7%"><div class="bar-val scenario-value" data-base="1.65">$1.65M</div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="background:var(--hu);height:70%"><div class="bar-val scenario-value" data-base="13.3">$13.3M</div></div>
+        <div class="bar-col" style="background:var(--bg-country);height:31.3%"><div class="bar-val scenario-value" data-base="5.95">$5.95M</div></div>
+        <div class="bar-col" style="background:var(--rs);height:20.3%"><div class="bar-val scenario-value" data-base="3.85">$3.85M</div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-col" style="background:var(--hu);height:100%"><div class="bar-val scenario-value" data-base="19">$19.0M</div></div>
+        <div class="bar-col" style="background:var(--bg-country);height:44.7%"><div class="bar-val scenario-value" data-base="8.5">$8.5M</div></div>
+        <div class="bar-col" style="background:var(--rs);height:29%"><div class="bar-val scenario-value" data-base="5.5">$5.5M</div></div>
+      </div>
+    </div>
+    <div class="bar-chart-labels">
+      <span>Year 1</span>
+      <span>Year 2</span>
+      <span>Year 3</span>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;padding:var(--sp-5)">
+    <div style="font-size:14px;color:var(--text-muted);margin-bottom:var(--sp-3)">3-Year Cumulative Revenue</div>
+    <div style="font-size:13px;font-weight:500;color:var(--text-secondary);line-height:1.8">
+      Year 1: <span class="scenario-value" data-base="9.9" style="font-weight:700;color:var(--text-primary)">$9.9M</span> →
+      Year 2: <span class="scenario-value" data-base="23.1" style="font-weight:700;color:var(--text-primary)">$23.1M</span> →
+      Year 3: <span class="scenario-value" data-base="33" style="font-weight:700;color:var(--text-primary)">$33.0M</span>
+    </div>
+    <div style="font-size:20px;font-weight:700;color:var(--som);margin-top:var(--sp-4);font-family:var(--font-mono)">
+      Total: <span class="scenario-value" data-base="66">$66M</span>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- UNIT ECONOMICS                                                -->
+<!-- ============================================================ -->
+<section id="unit-economics" class="section">
+<div class="container">
+  <div class="section-label">Model Transparency</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Unit Economics</h2>
+  </div>
+
+  <div class="formula">Accounts × ARPA = Revenue</div>
+
+  <div class="grid-3" style="margin-bottom:var(--sp-4)">
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--hu)">Hungary</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Segment</th><th>Accounts</th><th>ARPA</th><th>Revenue</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Enterprises</td><td>264</td><td>$79K</td><td class="scenario-value" data-base="20.9">$20.9M</td></tr>
+          <tr><td>Startups</td><td>144</td><td>$79K</td><td class="scenario-value" data-base="11.4">$11.4M</td></tr>
+          <tr><td>Government</td><td>72</td><td>$79K</td><td class="scenario-value" data-base="5.7">$5.7M</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>480</strong></td><td></td><td class="scenario-value" data-base="38"><strong>$38M</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--bg-country)">Bulgaria</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Segment</th><th>Accounts</th><th>ARPA</th><th>Revenue</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Enterprises</td><td>154</td><td>$61K</td><td class="scenario-value" data-base="9.35">$9.35M</td></tr>
+          <tr><td>Startups</td><td>84</td><td>$61K</td><td class="scenario-value" data-base="5.1">$5.1M</td></tr>
+          <tr><td>Government</td><td>42</td><td>$61K</td><td class="scenario-value" data-base="2.55">$2.55M</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>280</strong></td><td></td><td class="scenario-value" data-base="17"><strong>$17M</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--rs)">Serbia</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Segment</th><th>Accounts</th><th>ARPA</th><th>Revenue</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Enterprises</td><td>110</td><td>$55K</td><td class="scenario-value" data-base="6.05">$6.05M</td></tr>
+          <tr><td>Startups</td><td>60</td><td>$55K</td><td class="scenario-value" data-base="3.3">$3.3M</td></tr>
+          <tr><td>Government</td><td>30</td><td>$55K</td><td class="scenario-value" data-base="1.65">$1.65M</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>200</strong></td><td></td><td class="scenario-value" data-base="11"><strong>$11M</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Note:</strong> Current model uses uniform ARPA (~$55-79K) across segments within each country. In practice, enterprise ARPA should be 2-3× startup ARPA. Refining segment-specific ARPAs based on competitive pricing and win/loss analysis is a priority validation step.
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- REGULATORY                                                    -->
+<!-- ============================================================ -->
+<section id="regulatory" class="section">
+<div class="container">
+  <div class="section-label">Risk Assessment</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Regulatory Comparison</h2>
+  </div>
+
+  <div class="card table-scroll" style="margin-bottom:var(--sp-5)">
+    <table class="data-table">
+      <thead>
+        <tr><th>Factor</th><th>Hungary</th><th>Bulgaria</th><th>Serbia</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EU Membership</td>
+          <td><span class="badge badge-amber">Yes</span></td>
+          <td><span class="badge badge-amber">Yes</span></td>
+          <td><span class="badge badge-green">No</span></td>
+        </tr>
+        <tr>
+          <td>GDPR Applicability</td>
+          <td><span class="badge badge-red">Full</span></td>
+          <td><span class="badge badge-red">Full</span></td>
+          <td><span class="badge badge-amber">Partial adoption</span></td>
+        </tr>
+        <tr>
+          <td>Data Localization</td>
+          <td><span class="badge badge-amber">EU requirements</span></td>
+          <td><span class="badge badge-amber">EU requirements</span></td>
+          <td><span class="badge badge-green">Minimal</span></td>
+        </tr>
+        <tr>
+          <td>Govt Procurement</td>
+          <td><span class="badge badge-red">EU procurement rules</span></td>
+          <td><span class="badge badge-red">EU procurement rules</span></td>
+          <td><span class="badge badge-green">Open tenders</span></td>
+        </tr>
+        <tr>
+          <td>Chinese Vendor Restrictions</td>
+          <td><span class="badge badge-red">Under scrutiny</span></td>
+          <td><span class="badge badge-amber">Under scrutiny</span></td>
+          <td><span class="badge badge-green">No restrictions</span></td>
+        </tr>
+        <tr>
+          <td>China Bilateral Agreements</td>
+          <td><span class="badge badge-amber">Limited</span></td>
+          <td><span class="badge badge-green">Belt & Road participant</span></td>
+          <td><span class="badge badge-green">Strong ties</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-label">Risk Summary</div>
+  <div class="grid-3">
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--hu)">Hungary</h3>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        Highest regulatory risk. EU procurement rules and growing scrutiny of Chinese vendors limit government segment. Enterprise segment requires strong compliance narrative and local data-center presence.
+      </p>
+    </div>
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--bg-country)">Bulgaria</h3>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        Moderate EU regulatory risk offset by Belt & Road participation. Startup and private-sector enterprise opportunities more accessible than government. Sofia tech community culturally more open to new entrants.
+      </p>
+    </div>
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--rs)">Serbia</h3>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        Lowest regulatory barrier. Non-EU status, open procurement, and strong China bilateral ties create favorable environment. Best beachhead market for proving GTM model before EU entry.
+      </p>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHANNELS                                                      -->
+<!-- ============================================================ -->
+<section id="channels" class="section">
+<div class="container">
+  <div class="section-label">Go-to-Market</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Channel & Partnership Strategy</h2>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-5)">
+    <h3 style="margin-bottom:var(--sp-4)">Channel Model Framework</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Channel</th><th>Target Segment</th><th>Deal Size</th><th>Examples</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Direct Sales</td><td>Enterprise</td><td>&gt;$200K/yr</td><td>Named account teams, enterprise AEs</td></tr>
+        <tr><td>Reseller/VAR</td><td>Mid-market</td><td>$50-200K/yr</td><td>System integrators, telco cloud arms</td></tr>
+        <tr><td>Self-serve</td><td>Startups</td><td>&lt;$50K/yr</td><td>Marketplace, developer portal, credit programs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-label">Country Channel Plans</div>
+  <div class="grid-3">
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--hu)">Hungary</h3>
+      <ul style="font-size:13px;color:var(--text-secondary);padding-left:var(--sp-4);line-height:1.7">
+        <li><strong>Magyar Telekom</strong> — incumbent telco, cloud reseller arm</li>
+        <li><strong>Big 4 consulting</strong> — EY, Deloitte, PwC for enterprise migration</li>
+        <li><strong>Budapest tech meetups</strong> — developer evangelism for startup segment</li>
+      </ul>
+    </div>
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--bg-country)">Bulgaria</h3>
+      <ul style="font-size:13px;color:var(--text-secondary);padding-left:var(--sp-4);line-height:1.7">
+        <li><strong>A1 Bulgaria</strong> — telco partner for enterprise and government</li>
+        <li><strong>Chaos Group ecosystem</strong> — 3D rendering, GPU-heavy workloads</li>
+        <li><strong>Sofia tech hub</strong> — incubators, accelerators, SaaS clusters</li>
+        <li><strong>Regional SIs</strong> — Musala Soft, Neterra for mid-market</li>
+      </ul>
+    </div>
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--rs)">Serbia</h3>
+      <ul style="font-size:13px;color:var(--text-secondary);padding-left:var(--sp-4);line-height:1.7">
+        <li><strong>Yettel Serbia</strong> — telco partner, enterprise sales</li>
+        <li><strong>Belgrade dev community</strong> — JS Belgrade, PHP Serbia meetups</li>
+        <li><strong>Government IT contractors</strong> — RNIDS, e-Gov integrators</li>
+      </ul>
+    </div>
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- COMPARABLES                                                   -->
+<!-- ============================================================ -->
+<section id="comparables" class="section">
+<div class="container">
+  <div class="section-label">Benchmarks</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Comparable Market Entries</h2>
+  </div>
+
+  <div class="card table-scroll" style="margin-bottom:var(--sp-4)">
+    <table class="data-table">
+      <thead>
+        <tr><th>Provider</th><th>Region</th><th>Period</th><th>Capture Rate</th><th>Strategy</th><th>Relevance</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Alibaba Cloud</td>
+          <td>Southeast Asia</td>
+          <td>2018-2021</td>
+          <td class="conf-med">~8%</td>
+          <td>Local DC + pricing</td>
+          <td class="conf-high">High — similar brand gap</td>
+        </tr>
+        <tr>
+          <td>Oracle Cloud</td>
+          <td>CEE</td>
+          <td>2019-2022</td>
+          <td class="conf-med">~5%</td>
+          <td>Enterprise-first</td>
+          <td class="conf-med">Medium — different product focus</td>
+        </tr>
+        <tr>
+          <td>Huawei Cloud</td>
+          <td>Western Europe</td>
+          <td>2020-2023</td>
+          <td class="conf-low">~3%</td>
+          <td>Partner-led</td>
+          <td class="conf-high">High — similar regulatory risk</td>
+        </tr>
+        <tr>
+          <td>AWS</td>
+          <td>DACH (early)</td>
+          <td>2010-2013</td>
+          <td class="conf-high">~15%</td>
+          <td>First mover</td>
+          <td class="conf-low">Low — different competitive context</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Benchmark Context:</strong> Tencent's assumed 9-10% capture rate sits above the Huawei comparable (3%) but below AWS first-mover rates (15%). The assumption implies successful local DC deployment and strong channel partnerships — both are execution prerequisites, not certainties.
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- EXECUTION CAPACITY                                            -->
+<!-- ============================================================ -->
+<section id="execution-capacity" class="section">
+<div class="container">
+  <div class="section-label">Operational Readiness</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Execution Capacity</h2>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:var(--sp-4)">
+    <div class="card">
+      <h3 style="margin-bottom:var(--sp-3)">Sales Coverage</h3>
+      <table class="info-table">
+        <tr><td>Hungary AEs</td><td>8-12</td></tr>
+        <tr><td>Bulgaria AEs</td><td>4-6</td></tr>
+        <tr><td>Serbia AEs</td><td>3-4</td></tr>
+        <tr><td>Quota per AE</td><td>$3-4M</td></tr>
+        <tr><td>Pipeline coverage</td><td>3×</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:var(--sp-3)">Partner Network</h3>
+      <table class="info-table">
+        <tr><td>Hungary partners</td><td>5-8</td></tr>
+        <tr><td>Bulgaria partners</td><td>3-5</td></tr>
+        <tr><td>Serbia partners</td><td>2-3</td></tr>
+        <tr><td>Telco anchor</td><td>1 per market</td></tr>
+        <tr><td>SI certification</td><td>Required program</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:var(--sp-3)">Win Rate & Cycle</h3>
+      <table class="info-table">
+        <tr><td>Avg sales cycle</td><td>4-9 months</td></tr>
+        <tr><td>Target win rate</td><td>15-25%</td></tr>
+        <tr><td>Enterprise cycle</td><td>6-9 months</td></tr>
+        <tr><td>Startup cycle</td><td>2-4 months</td></tr>
+        <tr><td>Gov cycle</td><td>9-18 months</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Summary:</strong> Reaching $66M SOM requires ~20 sales professionals, 10-16 certified partners, and a 3× pipeline of ~$198M across all three markets. Sales hiring and partner recruitment are critical path items for Year 1 execution.
+  </div>
+
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- VERTICALS                                                     -->
+<!-- ============================================================ -->
+<section id="verticals" class="section">
+<div class="container">
+  <div class="section-label">Use Cases</div>
+  <div class="section-header">
+    <div class="bar" style="background:var(--tam)"></div>
+    <h2>Vertical & Use-Case Lens</h2>
+  </div>
+
+  <div class="card table-scroll" style="margin-bottom:var(--sp-5)">
+    <table class="data-table">
+      <thead>
+        <tr><th>Vertical</th><th>Cloud Maturity</th><th>TAM Share</th><th>Key Use Cases</th><th>Priority Countries</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Financial Services</td>
+          <td class="conf-high">High</td>
+          <td>25%</td>
+          <td>Core banking DR, compliance, API platforms</td>
+          <td>HU, RS</td>
+        </tr>
+        <tr>
+          <td>Manufacturing & Logistics</td>
+          <td class="conf-med">Medium</td>
+          <td>20%</td>
+          <td>IoT, supply chain analytics, ERP migration</td>
+          <td>HU, BG</td>
+        </tr>
+        <tr>
+          <td>Tech & SaaS</td>
+          <td class="conf-high">High</td>
+          <td>20%</td>
+          <td>GPU/AI compute, CI/CD, scalable infra</td>
+          <td>BG, RS</td>
+        </tr>
+        <tr>
+          <td>Public Sector</td>
+          <td class="conf-low">Low</td>
+          <td>15%</td>
+          <td>Sovereign hybrid, citizen services, data lakes</td>
+          <td>All</td>
+        </tr>
+        <tr>
+          <td>Telecom & Media</td>
+          <td class="conf-med">Medium</td>
+          <td>20%</td>
+          <td>CDN, edge compute, streaming infra</td>
+          <td>HU, BG</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-label">Country Use-Case Highlights</div>
+  <div class="grid-3">
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--hu)">Hungary</h3>
+      <ul style="font-size:13px;color:var(--text-secondary);padding-left:var(--sp-4);line-height:1.7">
+        <li><strong>Banking DR:</strong> OTP Bank, K&H require geo-redundant backup</li>
+        <li><strong>Automotive IoT:</strong> Audi, Mercedes plants need edge compute</li>
+        <li><strong>Telco CDN:</strong> Magyar Telekom, Vodafone video delivery</li>
+      </ul>
+    </div>
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--bg-country)">Bulgaria</h3>
+      <ul style="font-size:13px;color:var(--text-secondary);padding-left:var(--sp-4);line-height:1.7">
+        <li><strong>SaaS hosting:</strong> Sofia dev shops need scalable infra</li>
+        <li><strong>3D rendering:</strong> Chaos Group GPU workloads</li>
+        <li><strong>Logistics:</strong> DHL, Speedy supply chain analytics</li>
+      </ul>
+    </div>
+    <div class="card card-sm">
+      <h3 style="margin-bottom:var(--sp-3);color:var(--rs)">Serbia</h3>
+      <ul style="font-size:13px;color:var(--text-secondary);padding-left:var(--sp-4);line-height:1.7">
+        <li><strong>e-Gov pilots:</strong> National ID, tax portal migrations</li>
+        <li><strong>Fintech:</strong> Belgrade startup scene needs dev sandbox</li>
+        <li><strong>Gaming:</strong> Dev studios need compute and CDN</li>
+      </ul>
     </div>
   </div>
 
@@ -1243,6 +2089,12 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
         <tr><td>Low scenario multiplier</td><td>0.6×</td><td>Weak brand + no local DC + regulatory friction</td><td class="conf-med">Medium</td><td>All</td></tr>
         <tr><td>High scenario multiplier</td><td>1.6×</td><td>Local DC + strong partnerships + competitive pricing</td><td class="conf-med">Medium</td><td>All</td></tr>
         <tr><td>Account volumes</td><td>Per-country</td><td>Business registries + startup databases + SOE counts</td><td class="conf-low">Low</td><td>All</td></tr>
+        <tr><td>Competitive share estimates</td><td>Per-country</td><td>Industry reports + analyst estimates</td><td class="conf-low">Low</td><td>All</td></tr>
+        <tr><td>Revenue ramp distribution</td><td>15/35/50% Y1/Y2/Y3</td><td>Cloud market entry benchmarks</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>ARPA (uniform)</td><td>~$79K</td><td>SOM / accounts (simplification)</td><td class="conf-low">Low</td><td>All</td></tr>
+        <tr><td>Comparable capture rates</td><td>3-15% range</td><td>Public cloud expansion precedents</td><td class="conf-low">Low</td><td>All</td></tr>
+        <tr><td>Sales headcount requirement</td><td>~20 AEs total</td><td>$3-4M quota assumption</td><td class="conf-med">Medium</td><td>All</td></tr>
+        <tr><td>Partner target count</td><td>10-16 partners</td><td>Channel coverage model</td><td class="conf-med">Medium</td><td>All</td></tr>
       </tbody>
     </table>
   </div>
@@ -1268,9 +2120,9 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
         <tr><th>Scenario</th><th>Multiplier</th><th>Hungary SOM</th><th>Bulgaria SOM</th><th>Serbia SOM</th><th>Total</th></tr>
       </thead>
       <tbody>
-        <tr><td>Low</td><td>0.6×</td><td>$22.8M</td><td>$10.2M</td><td>$6.6M</td><td><strong>$39.6M</strong></td></tr>
-        <tr><td>Base</td><td>1.0×</td><td>$38M</td><td>$17M</td><td>$11M</td><td><strong>$66M</strong></td></tr>
-        <tr><td>High</td><td>1.6×</td><td>$60.8M</td><td>$27.2M</td><td>$17.6M</td><td><strong>$105.6M</strong></td></tr>
+        <tr><td>Low</td><td>0.6×</td><td class="scenario-value" data-base="38">$22.8M</td><td class="scenario-value" data-base="17">$10.2M</td><td class="scenario-value" data-base="11">$6.6M</td><td><strong class="scenario-value" data-base="66">$39.6M</strong></td></tr>
+        <tr><td>Base</td><td>1.0×</td><td class="scenario-value" data-base="38">$38M</td><td class="scenario-value" data-base="17">$17M</td><td class="scenario-value" data-base="11">$11M</td><td><strong class="scenario-value" data-base="66">$66M</strong></td></tr>
+        <tr><td>High</td><td>1.6×</td><td class="scenario-value" data-base="38">$60.8M</td><td class="scenario-value" data-base="17">$27.2M</td><td class="scenario-value" data-base="11">$17.6M</td><td><strong class="scenario-value" data-base="66">$105.6M</strong></td></tr>
       </tbody>
     </table>
   </div>
@@ -1365,6 +2217,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
 </section>
 
 <script>
+// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   a.addEventListener('click', function(e) {
     var target = document.querySelector(this.getAttribute('href'));
@@ -1374,6 +2227,63 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     }
   });
 });
+
+// Scenario toggle functionality
+(function() {
+  var multipliers = {
+    low: 0.6,
+    base: 1.0,
+    high: 1.6
+  };
+
+  var buttons = document.querySelectorAll('.scenario-btn');
+  var values = document.querySelectorAll('[data-base]');
+
+  function updateScenario(scenario) {
+    var multiplier = multipliers[scenario];
+
+    // Add fade effect
+    values.forEach(function(el) {
+      el.classList.add('fading');
+    });
+
+    setTimeout(function() {
+      values.forEach(function(el) {
+        var base = parseFloat(el.getAttribute('data-base'));
+        var newValue = base * multiplier;
+
+        // Format the value
+        var formatted;
+        if (newValue >= 1000) {
+          formatted = '$' + (newValue / 1000).toFixed(2) + 'B';
+        } else if (newValue >= 1) {
+          formatted = '$' + newValue.toFixed(1) + 'M';
+        } else {
+          formatted = '$' + newValue.toFixed(2) + 'M';
+        }
+
+        el.textContent = formatted;
+        el.classList.remove('fading');
+      });
+    }, 75);
+
+    // Update active button
+    buttons.forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+    document.querySelector('.scenario-btn[data-scenario="' + scenario + '"]').classList.add('active');
+  }
+
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var scenario = this.getAttribute('data-scenario');
+      updateScenario(scenario);
+    });
+  });
+
+  // Initialize with base scenario
+  updateScenario('base');
+})();
 </script>
 </body>
 </html>
