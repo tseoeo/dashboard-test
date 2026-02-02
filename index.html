@@ -774,6 +774,46 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
 }
 .back-top:hover { color: var(--text-secondary); }
 
+/* Source citations */
+.src {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: var(--sp-3);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+.src a {
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 0.5px solid var(--border-subtle);
+  transition: color 150ms var(--ease), border-color 150ms var(--ease);
+}
+.src a:hover { color: var(--text-secondary); border-color: var(--text-muted); }
+.src-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: var(--bg-sunken);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  margin-right: 4px;
+}
+.src-estimate {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--conf-med);
+  background: #fffbeb;
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  margin-right: 4px;
+}
+
 /* Section label */
 .section-label {
   font-size: 10px;
@@ -1003,6 +1043,15 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     <div class="chip">Government <strong>15%</strong> of SAM</div>
   </div>
 
+  <div class="src" style="color:var(--text-on-dark-muted)">
+    <span class="src-tag" style="background:rgba(255,255,255,0.06)">Sources</span>
+    TAM derived from GDP × IT-spend ratio × cloud share — <a href="https://www.statista.com/outlook/tmo/public-cloud/hungary" style="color:var(--text-on-dark-muted);border-color:rgba(255,255,255,0.15)">Statista Public Cloud</a>,
+    <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Cloud_computing_-_statistics_on_the_use_by_enterprises" style="color:var(--text-on-dark-muted);border-color:rgba(255,255,255,0.15)">Eurostat Cloud Adoption Survey 2023</a>,
+    <a href="https://www.mordorintelligence.com/industry-reports/hungary-ict-market" style="color:var(--text-on-dark-muted);border-color:rgba(255,255,255,0.15)">Mordor Intelligence ICT</a>.
+    Account counts filtered from national business registries (200+ employee enterprises, startups, SOEs).
+    <span class="src-estimate" style="background:rgba(217,119,6,0.15);color:#fbbf24">Estimate</span> Country-level cloud market shares extrapolated from global data; no public per-country CEE breakdown exists.
+  </div>
+
   <div class="nav-row">
     <a href="#hungary" class="nav-btn">Hungary</a>
     <a href="#bulgaria" class="nav-btn">Bulgaria</a>
@@ -1145,6 +1194,15 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
   </div>
 
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    GDP: <a href="https://tradingeconomics.com/hungary/gdp">Trading Economics</a> (~$220B nominal).
+    TAM ($950M ≈ 0.43% GDP): <a href="https://www.statista.com/outlook/tmo/public-cloud/hungary">Statista Public Cloud Hungary</a>, <a href="https://www.mordorintelligence.com/industry-reports/hungary-ict-market">Mordor Intelligence ICT</a>.
+    Banks: <a href="https://en.wikipedia.org/wiki/OTP_Bank">OTP Bank</a> (#1 HU), <a href="https://en.wikipedia.org/wiki/K%26H_Bank">K&H Bank</a> (#3 HU).
+    Audi Győr: <a href="https://en.wikipedia.org/wiki/Audi_Hungaria">Wikipedia</a>, 11,930 employees. Mercedes Kecskemét: <a href="https://hungarytoday.hu/new-mercedes-benz-plant-completed-in-kecskemet/">HungaryToday</a>.
+    <span class="src-estimate">Estimate</span> Market shares, account counts, and ARPA are model assumptions.
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -1256,6 +1314,15 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <div class="s-value scenario-value" data-base="17">$27.2M</div>
       <div class="s-mult">1.6× base</div>
     </div>
+  </div>
+
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    GDP: ~$107-112B (2024). TAM ($450M): <a href="https://www.statista.com/outlook/tmo/public-cloud/bulgaria">Statista Public Cloud Bulgaria</a>, <a href="https://www.mordorintelligence.com/industry-reports/bulgaria-ict-market">Mordor Intelligence</a>.
+    IT outsourcing hub: <a href="https://intellias.com/outsourcing-bulgaria/">Intellias</a>, <a href="https://dreamix.eu/insights/it-outsourcing-to-bulgaria/">Dreamix</a> (110K+ IT specialists, 5.5% GDP).
+    Sofia tech: <a href="https://alcor.com/bulgaria-as-a-software-development-outsourcing-destination/">Alcor</a> (Europe's 2nd fastest-growing tech center).
+    Enterprises: <a href="https://www.nsi.bg/en/statistical-data/372/1066">NSI Bulgaria</a> (404K total; 7,500 = filtered cloud-addressable subset).
+    <span class="src-estimate">Estimate</span> Market shares and ARPA are model assumptions.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -1371,6 +1438,17 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
   </div>
 
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    GDP: ~$83-89B (2024). TAM ($340M): <a href="https://www.statista.com/outlook/tmo/public-cloud/serbia">Statista Public Cloud Serbia</a>, <a href="https://www.trade.gov/country-commercial-guides/serbia-digital-economy">US Trade.gov</a>.
+    Non-EU status: <a href="https://en.wikipedia.org/wiki/Accession_of_Serbia_to_the_European_Union">Wikipedia</a> (candidate since 2012).
+    GDPR partial: <a href="https://www.dlapiperdataprotection.com/index.html?t=law&c=RS">DLA Piper</a> (LPDP mirrors GDPR, weaker enforcement).
+    Yettel: <a href="https://en.wikipedia.org/wiki/Yettel_Serbia">Wikipedia</a> (3M customers, 500M+ EUR revenue).
+    Belgrade tech: <a href="https://www.trade.gov/country-commercial-guides/serbia-information-and-communications-technology-market">US Trade.gov</a> ($4.3B ICT exports 2024, 115K workers).
+    Enterprises: <a href="https://publikacije.stat.gov.rs/G2024/pdfE/G202410128.pdf">Stat. Office of Serbia</a> (110K total; 5,800 = filtered subset).
+    <span class="src-estimate">Estimate</span> Market shares and ARPA are model assumptions.
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -1433,6 +1511,12 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
 
   <div class="callout">
     <strong>White Space Opportunity:</strong> The Other/Fragmented segment (16-22% across markets) represents Tencent's primary entry point. These customers are not locked into hyperscaler ecosystems and are receptive to competitive pricing and regional data-center presence.
+  </div>
+
+  <div class="src">
+    <span class="src-estimate">Estimate</span> Country-level cloud market shares are model estimates extrapolated from global data (<a href="https://holori.com/cloud-market-share-2024-aws-azure-gcp/">Holori 2024</a>: AWS 31%, Azure 25%, GCP 10% globally).
+    No public per-country CEE breakdown exists from Gartner/IDC. Local provider shares adjusted based on <a href="https://www.srgresearch.com/articles/european-cloud-providers-local-market-share-now-holds-steady-at-15">Synergy Research</a> (EU local ~15%).
+    Serbia: <a href="https://www.oracle.com/news/announcement/oracle-opens-cloud-region-in-serbia-2023-05-12/">Oracle</a> is the only hyperscaler with a dedicated in-country region; Huawei has strong government ties.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -1505,6 +1589,12 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </table>
   </div>
 
+  <div class="src">
+    <span class="src-estimate">Estimate</span> Prioritization scores are qualitative assessments based on regulatory environment, market size, and competitive intensity.
+    Serbia non-EU advantage: <a href="https://en.wikipedia.org/wiki/Accession_of_Serbia_to_the_European_Union">candidate status</a>, <a href="https://en.wikipedia.org/wiki/China%E2%80%93Serbia_relations">strong China ties</a>.
+    <a href="https://www.trade.gov/country-commercial-guides/serbia-selling-public-sector">Open procurement</a> verified via US Trade.gov.
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -1556,6 +1646,10 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     <div style="font-size:20px;font-weight:700;color:var(--som);margin-top:var(--sp-4);font-family:var(--font-mono)">
       Total: <span class="scenario-value" data-base="66">$66M</span>
     </div>
+  </div>
+
+  <div class="src">
+    <span class="src-estimate">Estimate</span> Revenue ramp (15/35/50% Y1/Y2/Y3) based on cloud market entry benchmarks. Country splits derived from SAM proportions.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -1624,6 +1718,10 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
 
   <div class="callout">
     <strong>Note:</strong> Current model uses uniform ARPA (~$55-79K) across segments within each country. In practice, enterprise ARPA should be 2-3× startup ARPA. Refining segment-specific ARPAs based on competitive pricing and win/loss analysis is a priority validation step.
+  </div>
+
+  <div class="src">
+    <span class="src-estimate">Estimate</span> Uniform ARPA ($55-79K) is a simplification. Account counts and segment splits are model inputs, not observed data.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -1709,6 +1807,14 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
   </div>
 
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    EU membership: HU/BG confirmed EU members. Serbia: <a href="https://en.wikipedia.org/wiki/Accession_of_Serbia_to_the_European_Union">EU candidate since 2012</a>.
+    GDPR: HU/BG full compliance. Serbia: <a href="https://www.dlapiperdataprotection.com/index.html?t=law&c=RS">LPDP (2019)</a> mirrors GDPR with weaker penalties (~€17K max).
+    China ties — Serbia: <a href="https://en.wikipedia.org/wiki/China%E2%80%93Serbia_relations">ironclad friendship</a>, <a href="https://www.tandfonline.com/doi/full/10.1080/24761028.2023.2240999">~$10B BRI investment</a>.
+    Bulgaria BRI: <a href="https://www.bta.bg/en/news/bulgaria/1014337">BTA (10th anniversary, 17 agreements)</a>, though <a href="https://cepa.org/comprehensive-reports/chinese-influence-in-bulgaria/">CEPA notes limited practical impact</a>.
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -1767,6 +1873,16 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
   </div>
 
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    Magyar Telekom: <a href="https://www.deutschetelekomitsolutions.hu/en/cloud-services-en/">DT IT Solutions</a> (1,500+ cloud staff, AWS/Azure/GCP reseller).
+    A1 Bulgaria: <a href="https://en.wikipedia.org/wiki/A1_Bulgaria">Wikipedia</a> (largest mobile operator, ~2.9M customers, A1 Telekom Austria Group).
+    Chaos Group: <a href="https://en.wikipedia.org/wiki/Chaos_(company)">Wikipedia</a> (Sofia-founded, V-Ray, Academy Award 2017).
+    Musala Soft: <a href="https://www.musala.com/company/">musala.com</a> (750 employees, now Qinshift/Aricoma). Neterra: <a href="https://neterra.net/about-us">neterra.net</a> (4 data centers, 200+ PoPs).
+    Yettel Serbia: <a href="https://en.wikipedia.org/wiki/Yettel_Serbia">Wikipedia</a> (3M customers, e&PPF Group).
+    RNIDS: <a href="https://www.rnids.rs/en">rnids.rs</a> (.rs domain registry, est. 2006).
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -1814,10 +1930,10 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
         </tr>
         <tr>
           <td>AWS</td>
-          <td>DACH (early)</td>
-          <td>2010-2013</td>
+          <td>DACH</td>
+          <td>2014-2018</td>
           <td class="conf-high">~15%</td>
-          <td>First mover</td>
+          <td>First mover + local DC</td>
           <td class="conf-low">Low — different competitive context</td>
         </tr>
       </tbody>
@@ -1826,6 +1942,14 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
 
   <div class="callout">
     <strong>Benchmark Context:</strong> Tencent's assumed 9-10% capture rate sits above the Huawei comparable (3%) but below AWS first-mover rates (15%). The assumption implies successful local DC deployment and strong channel partnerships — both are execution prerequisites, not certainties.
+  </div>
+
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    Alibaba Cloud SEA: <a href="https://en.wikipedia.org/wiki/Alibaba_Cloud">Wikipedia</a> (~7% SEA share per Twimbit 2021; 60%+ growth).
+    Oracle CEE: <a href="https://blogs.oracle.com/ocee/post/customers-in-central-eastern-europe-embrace-oracle-cloud">Oracle CEE Blog</a>. <span class="src-estimate">Estimate</span> ~5% capture unverifiable from public sources.
+    Huawei W. Europe: <a href="https://ecipe.org/publications/how-huawei-weathered-the-storm-resilience-market-conditions-or-failed-sanctions/">ECIPE</a>. <span class="src-estimate">Estimate</span> ~3% cloud share unverifiable.
+    AWS DACH: Frankfurt region launched Oct 2014 (<a href="https://aws.amazon.com/executive-insights/dach/">AWS DACH</a>). ~15% share achievable post-local DC but timing approximate.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -1878,6 +2002,10 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
 
   <div class="callout">
     <strong>Summary:</strong> Reaching $66M SOM requires ~20 sales professionals, 10-16 certified partners, and a 3× pipeline of ~$198M across all three markets. Sales hiring and partner recruitment are critical path items for Year 1 execution.
+  </div>
+
+  <div class="src">
+    <span class="src-estimate">Estimate</span> Sales headcount, quota, and partner targets are modeled assumptions based on SaaS/cloud industry benchmarks ($3-4M quota/AE, 3× pipeline coverage). Not sourced from Tencent-specific data.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -1947,7 +2075,7 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
       <ul style="font-size:13px;color:var(--text-secondary);padding-left:var(--sp-4);line-height:1.7">
         <li><strong>Banking DR:</strong> OTP Bank, K&H require geo-redundant backup</li>
         <li><strong>Automotive IoT:</strong> Audi, Mercedes plants need edge compute</li>
-        <li><strong>Telco CDN:</strong> Magyar Telekom, Vodafone video delivery</li>
+        <li><strong>Telco CDN:</strong> Magyar Telekom, One (ex-Vodafone) video delivery</li>
       </ul>
     </div>
     <div class="card card-sm">
@@ -1966,6 +2094,16 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
         <li><strong>Gaming:</strong> Dev studios need compute and CDN</li>
       </ul>
     </div>
+  </div>
+
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    OTP Bank, K&H: <a href="https://thebanks.eu/countries/Hungary/major_banks">TheBanks.eu</a>.
+    Audi Győr: <a href="https://www.audi.com/en/company/strategy/locations/hungary/">audi.com</a>. Mercedes Kecskemét: <a href="https://hungarytoday.hu/new-mercedes-benz-plant-completed-in-kecskemet/">HungaryToday</a>.
+    One (ex-Vodafone): <a href="https://en.wikipedia.org/wiki/One_Hungary">Wikipedia</a> (rebranded Jan 2025).
+    Chaos Group: <a href="https://en.wikipedia.org/wiki/Chaos_(company)">Wikipedia</a>. DHL/Speedy: <a href="https://www.speedy.bg/en/about-speedy">speedy.bg</a>.
+    Belgrade tech: <a href="https://startupgenome.com/ecosystems/belgrade-and-novi-sad">Startup Genome</a>.
+    <span class="src-estimate">Estimate</span> Vertical TAM shares are qualitative assessments.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -2022,6 +2160,13 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
   </div>
 
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    Enterprise data: <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Cloud_computing_-_statistics_on_the_use_by_enterprises">Eurostat enterprise surveys</a>, national statistics bureaus.
+    Startups: <a href="https://startupgenome.com">Startup Genome</a>, <a href="https://dealroom.co">Dealroom</a>.
+    Government IT: <a href="https://www.trade.gov/country-commercial-guides/serbia-selling-public-sector">US Trade.gov procurement data</a>, EU funding allocations.
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -2054,6 +2199,14 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     <p style="color:var(--text-secondary);font-size:13px;line-height:1.7">
       Cross-checked against Gartner / IDC CEE cloud spending estimates and Eurostat enterprise cloud adoption surveys. Account volumes derived from national business registries filtered to 200+ employee enterprises, Crunchbase startup counts, and public-sector entity counts.
     </p>
+  </div>
+
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    Eurostat cloud surveys: <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Cloud_computing_-_statistics_on_the_use_by_enterprises">52.7% EU enterprise adoption (2025)</a>.
+    IT spend ratios: <a href="https://www.gartner.com/en/newsroom/press-releases/2023-11-09-gartner-forecasts-it-spending-in-europe-to-record-9-percent-growth-in-2024">Gartner EU IT Spending</a> (~$1.1T in 2024).
+    Business registries: <a href="https://www.nsi.bg/en/statistical-data/372/1066">NSI Bulgaria</a>, <a href="https://publikacije.stat.gov.rs/G2024/pdfE/G202410128.pdf">Serbia Stat. Office</a>, <a href="https://www.statista.com/statistics/1183801/hungary-number-of-enterprises/">Statista Hungary</a>.
+    Tencent Cloud: <a href="https://www.tencentcloud.com/global-infrastructure">Frankfurt region since 2021</a>.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -2099,6 +2252,12 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </table>
   </div>
 
+  <div class="src">
+    <span class="src-tag">Sources</span>
+    Full source attribution per assumption listed in Source/Logic column above.
+    <span class="src-estimate">Estimate</span> Items marked "Low" confidence have no single authoritative public source and rely on analyst estimates or model extrapolation.
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -2125,6 +2284,10 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
         <tr><td>High</td><td>1.6×</td><td class="scenario-value" data-base="38">$60.8M</td><td class="scenario-value" data-base="17">$27.2M</td><td class="scenario-value" data-base="11">$17.6M</td><td><strong class="scenario-value" data-base="66">$105.6M</strong></td></tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="src">
+    <span class="src-estimate">Estimate</span> Scenario multipliers (0.6×/1.0×/1.6×) are modeled assumptions, not empirically derived.
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
@@ -2171,6 +2334,10 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
     </div>
   </div>
 
+  <div class="src">
+    <span class="src-estimate">Estimate</span> Sensitivity ranges (±15-40%) are qualitative assessments based on comparable market entries and expert judgment.
+  </div>
+
   <a href="#hero" class="back-top">↑ Back to top</a>
 </div>
 </section>
@@ -2210,6 +2377,25 @@ h3 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.
         <tr><td>SOE</td><td>State-Owned Enterprise</td></tr>
       </table>
     </div>
+  </div>
+
+  <div class="card" style="margin-top:var(--sp-5)">
+    <h3 style="margin-bottom:var(--sp-3)">Data Sources & Methodology Notes</h3>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:var(--sp-3)">
+      This dashboard uses a top-down market sizing approach. Data labeled <span class="src-tag" style="display:inline">Sources</span> is backed by public references.
+      Data labeled <span class="src-estimate" style="display:inline">Estimate</span> is modeled or extrapolated and should be validated with primary research.
+    </p>
+    <table class="info-table">
+      <tr><td>Eurostat</td><td><a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Cloud_computing_-_statistics_on_the_use_by_enterprises" style="color:var(--text-secondary)">Enterprise cloud adoption surveys (42.5% EU, 2023)</a></td></tr>
+      <tr><td>Statista</td><td><a href="https://www.statista.com/outlook/tmo/public-cloud/" style="color:var(--text-secondary)">Public cloud market forecasts per country</a></td></tr>
+      <tr><td>Gartner</td><td><a href="https://www.gartner.com/en/newsroom/press-releases/2023-11-09-gartner-forecasts-it-spending-in-europe-to-record-9-percent-growth-in-2024" style="color:var(--text-secondary)">EU IT spending forecasts ($1.1T, 2024)</a></td></tr>
+      <tr><td>Synergy Research</td><td><a href="https://www.srgresearch.com/articles/european-cloud-providers-local-market-share-now-holds-steady-at-15" style="color:var(--text-secondary)">EU cloud provider market shares</a></td></tr>
+      <tr><td>Mordor Intelligence</td><td><a href="https://www.mordorintelligence.com/industry-reports/hungary-ict-market" style="color:var(--text-secondary)">Hungary & Bulgaria ICT market reports</a></td></tr>
+      <tr><td>US Trade.gov</td><td><a href="https://www.trade.gov/country-commercial-guides/serbia-digital-economy" style="color:var(--text-secondary)">Serbia ICT & digital economy commercial guides</a></td></tr>
+      <tr><td>Business Registries</td><td>NSI Bulgaria, Serbia Statistical Office, Hungary KSH — enterprise counts by size</td></tr>
+      <tr><td>Tencent Cloud</td><td><a href="https://www.tencentcloud.com/global-infrastructure" style="color:var(--text-secondary)">Global infrastructure (Frankfurt region, 2021)</a></td></tr>
+    </table>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:var(--sp-3)">Last updated: February 2026. Country-level cloud market shares are model estimates — no public per-country CEE breakdown exists from any major analyst firm.</p>
   </div>
 
   <a href="#hero" class="back-top">↑ Back to top</a>
